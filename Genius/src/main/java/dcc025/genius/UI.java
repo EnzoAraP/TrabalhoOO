@@ -1,30 +1,57 @@
 package dcc025.genius;
 
-import java.awt.GridLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import java.awt.*;
+import javax.swing.*;
 
-public class UI {
-    
-    public static void Board() {
-        JFrame board = new JFrame("Genius");
-        JPanel panel = new JPanel();
+public class UI {//(Separei essas partes em private por que o Gleiph fez o mesmo no arquivo dele então achei melhor(Enzo);
+        private JFrame tela;
+        private final int WIDTH = 500;
+        private final int HEIGHT = 300;
+        private JList<Integer> listaswing;
         
-        panel.setLayout(new GridLayout(2,2));
-        panel.add(new JButton("Button1"));
-        panel.add(new JButton("Button2"));
-        panel.add(new JButton("Button3"));
-        panel.add(new JButton("Button4"));
-        
-        board.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        board.setSize(500,500);
-        board.getContentPane().add(panel);
-        board.setVisible(true);
+    public void Board() {//Separei aqui apenas a tela para chamar as outras funçóes(Enzo);
+        tela = new JFrame("Genius");
+        tela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        tela.setSize(WIDTH,HEIGHT);
+        Jogo();
+        Leaderboard();
+        Opcoes();
+        tela.setVisible(true);
     }
-    
-    public static void main(String[] args) {
-        Board();
+    public void Jogo(){     //Adiciona apenas o proprio Genius(Enzo)
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(2,2));
+      //  String caminhoAmarelo = "src/main/Resources/colors/amarelo.png";
+        //ImageIcon icone = new ImageIcon(UI.class.getResource(caminho)); (Eu não estou conseguindo nem a pau pegar a imagem pelos arquivos de dentro do scr, devo ter que perguntar pro gleiph(Enzo);
+        panel.add(new JButton("Verde"));
+        panel.add(new JButton("Amarelo"));
+        panel.add(new JButton("Vermelho"));
+        panel.add(new JButton("Azul"));       
+        tela.getContentPane().add(panel);
+    }
+    public void Leaderboard(){ //Adiciona o Leaderboard(Enzo)
+    JPanel panel = new JPanel();
+           
+          panel.setPreferredSize(new Dimension(WIDTH/3, HEIGHT/2));
+          panel.setLayout(new BorderLayout());
+          DefaultListModel<Integer> pontuacao = new DefaultListModel<>();// Não conseguir ver direito daonde veio essa função,  List comum não funciona; queria fazer um map para por nome/pontuação na lista(Enzo);
+          pontuacao.addElement(0);
+          pontuacao.addElement(1);
+          pontuacao.addElement(2);
+          pontuacao.addElement(3);
+          listaswing = new JList<>(pontuacao);
+           panel.add(new JScrollPane(listaswing), BorderLayout.CENTER);
+           tela.getContentPane().add(panel,BorderLayout.EAST);
+    }
+    public void Opcoes(){ //Inicio de tentativas de por os botoes de Logar e afins(Enzo);
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(4,1));
+        panel.setPreferredSize(new Dimension(WIDTH, HEIGHT/5));
+        panel.add(new JButton("Login"));
+         panel.add(new JButton("Register"));
+        panel.add(new JButton("Logout"));
+            tela.getContentPane().add(panel,BorderLayout.SOUTH);
+         
     }
     
 }
