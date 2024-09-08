@@ -7,7 +7,8 @@ public class UI {//(Separei essas partes em private por que o Gleiph fez o mesmo
         private JFrame tela;
         private final int WIDTH = 500;
         private final int HEIGHT = 300;
-        private JList<Integer> listaswing;
+        private JList<Integer> listaswingint;
+        private JList<String> listaswingstring;
         
     public void Board() {//Separei aqui apenas a tela para chamar as outras funçóes(Enzo);
         tela = new JFrame("Genius");
@@ -33,14 +34,24 @@ public class UI {//(Separei essas partes em private por que o Gleiph fez o mesmo
     JPanel panel = new JPanel();
            
           panel.setPreferredSize(new Dimension(WIDTH/3, HEIGHT/2));
-          panel.setLayout(new BorderLayout());
+          panel.setLayout(new GridLayout(1,2));
           DefaultListModel<Integer> pontuacao = new DefaultListModel<>();// Não conseguir ver direito daonde veio essa função,  List comum não funciona; queria fazer um map para por nome/pontuação na lista(Enzo);
+          {//adiciona testes
           pontuacao.addElement(0);
           pontuacao.addElement(1);
           pontuacao.addElement(2);
           pontuacao.addElement(3);
-          listaswing = new JList<>(pontuacao);
-           panel.add(new JScrollPane(listaswing), BorderLayout.CENTER);
+    }
+          DefaultListModel<String> pontuador = new DefaultListModel<>();
+          {//adiciona testes
+          pontuador.addElement("Primeiro");
+          pontuador.addElement("Segundo");
+          pontuador.addElement("Terceiro");
+          }
+          listaswingstring = new JList<>(pontuador);
+          listaswingint = new JList<>(pontuacao);
+           panel.add(new JScrollPane(listaswingstring));
+           panel.add(new JScrollPane(listaswingint));
            tela.getContentPane().add(panel,BorderLayout.EAST);
     }
     public void Opcoes(){ //Inicio de tentativas de por os botoes de Logar e afins(Enzo);
