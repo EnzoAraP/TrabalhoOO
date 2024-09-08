@@ -22,12 +22,18 @@ public class UI {//(Separei essas partes em private por que o Gleiph fez o mesmo
     public void Jogo(){     //Adiciona apenas o proprio Genius(Enzo)
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(2,2));
-      //  String caminhoAmarelo = "src/main/Resources/colors/amarelo.png";
-        //ImageIcon icone = new ImageIcon(UI.class.getResource(caminho)); (Eu não estou conseguindo nem a pau pegar a imagem pelos arquivos de dentro do scr, devo ter que perguntar pro gleiph(Enzo);
-        panel.add(new JButton("Verde"));
-        panel.add(new JButton("Amarelo"));
-        panel.add(new JButton("Vermelho"));
-        panel.add(new JButton("Azul"));       
+        String caminhoAmarelo = "/colors/amarelo.png";
+        String caminhoVermelho = "/colors/vermelho.png";
+         String caminhoVerde = "/colors/verde.png";
+          String caminhoAzul = "/colors/azul.png";
+        ImageIcon iconeAM = new ImageIcon(UI.class.getResource(caminhoAmarelo)); 
+        ImageIcon iconeVM = new ImageIcon(UI.class.getResource(caminhoVermelho)); 
+        ImageIcon iconeVR = new ImageIcon(UI.class.getResource(caminhoVerde)); 
+        ImageIcon iconeAZ = new ImageIcon(UI.class.getResource(caminhoAzul));
+        panel.add(new JButton("Verde",iconeVR));
+        panel.add(new JButton("Amarelo",iconeAM));
+        panel.add(new JButton("Vermelho",iconeVM));
+        panel.add(new JButton("Azul",iconeAZ));       
         tela.getContentPane().add(panel);
     }
     public void Leaderboard(){ //Adiciona o Leaderboard(Enzo)
