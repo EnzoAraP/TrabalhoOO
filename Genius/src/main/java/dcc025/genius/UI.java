@@ -5,6 +5,8 @@ import javax.swing.*;
 
 public class UI {//(Separei essas partes em private por que o Gleiph fez o mesmo no arquivo dele então achei melhor(Enzo);
         private JFrame tela;
+        private JFrame telaconta;
+        public JFrame telainicial;
         private final int WIDTH = 500;
         private final int HEIGHT = 300;
         private JList<Integer> listaswingint;
@@ -18,6 +20,28 @@ public class UI {//(Separei essas partes em private por que o Gleiph fez o mesmo
         Leaderboard();
         Opcoes();
         tela.setVisible(true);
+    }
+    public void Telainicial(){//teste tela inicial
+        telainicial =new JFrame("Tela inicial");
+        telainicial.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        telainicial.setSize(WIDTH,HEIGHT);
+        Botoestela();
+        telainicial.setVisible(true);
+    }
+    public void Botoestela()//Panel para por os botoes da tela inicial
+    {
+            JPanel panel = new JPanel ();
+            panel.setLayout(new GridLayout(4,1));
+            panel.setPreferredSize(new Dimension(WIDTH/3, HEIGHT/2));
+            JButton Jogar = new JButton("Jogar");
+            JButton Conta = new JButton("Conta");
+            panel.add(Jogar);
+            panel.add(new JButton("Leaderboard"));
+            panel.add(Conta);
+            Conta.addActionListener(new BotaoConta(this));
+            Jogar.addActionListener (new BotaoJogo(this));
+            telainicial.getContentPane().add(panel,BorderLayout.CENTER);
+                    
     }
     public void Jogo(){     //Adiciona apenas o proprio Genius(Enzo)
         JPanel panel = new JPanel();
@@ -35,6 +59,17 @@ public class UI {//(Separei essas partes em private por que o Gleiph fez o mesmo
         panel.add(new JButton("Vermelho",iconeVM));
         panel.add(new JButton("Azul",iconeAZ));       
         tela.getContentPane().add(panel);
+    }
+    public void TelaConta(){//Tela da conta -> Possui o botão de Login e Registrar, os quais vao abrir Panels;
+        telaconta = new JFrame("TelaConta");
+        telaconta.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+           telaconta.setSize(WIDTH,HEIGHT);
+           telaconta.setLayout(new GridLayout(2,1));
+        JButton Login = new JButton("Login");
+        JButton Register = new JButton ("Registrar");
+        telaconta.add(Login);
+        telaconta.add(Register);
+        telaconta.setVisible(true);
     }
     public void Leaderboard(){ //Adiciona o Leaderboard(Enzo)
     JPanel panel = new JPanel();
