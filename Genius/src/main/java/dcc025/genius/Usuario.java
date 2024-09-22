@@ -27,6 +27,16 @@ public class Usuario {
         this.id=numUsuariosCriados;
         recorde=0;
     }
+    public Usuario(String nome, Email email, String senha) throws Exception {
+        if(nome==null || email==null || senha== null)
+            throw new Exception("Variáveis nulas passadas");
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        numUsuariosCriados++;
+        this.id=numUsuariosCriados;
+        recorde=0;
+    }
 
     public int getRecorde() {
         return recorde;
@@ -74,6 +84,11 @@ public class Usuario {
     
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    @Override
+    public String toString() {
+        return nome;
     }
     
     

@@ -32,8 +32,10 @@ public class Email {
         String emailSeparado[] = email.split("@");
         if(emailSeparado.length != 2)
             throw new EmailFormatoException();
+        System.out.println("aaaa");
         String emailSeparado2[] = emailSeparado[1].split("\\.");
-        if(emailSeparado2.length!=2 || emailSeparado2.length!=3)
+        System.out.println(emailSeparado2[0]+" "+emailSeparado2[1]);
+        if(emailSeparado2.length!=2 && emailSeparado2.length!=3)
             throw new EmailFormatoException();
         this.emailCompleto=email;
         emails.add(email);
@@ -43,6 +45,10 @@ public class Email {
         return emailCompleto;
     }
 
+    public static void setListaInicial(Set<String> emails) {
+        Email.emails = emails;
+    }
+     
     @Override
     public String toString() {
         return emailCompleto;

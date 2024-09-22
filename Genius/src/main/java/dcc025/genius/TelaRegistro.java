@@ -11,12 +11,19 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
@@ -35,20 +42,25 @@ public class TelaRegistro {
     private JTextField campoEmail;
     private JTextField campoSenha;
     private JList<Usuario> jListUsuarios;
+    private List<Usuario> listaUsuarios;
     JTable tabela;
     Font fonte;
     Font fonte2;
     Font fonte3;
+    
 
     public void desenha() {
+        
         fonte = new Font("Arial", 4, 17);
         fonte2 = new Font("Arial", 5, 20);
         fonte3 = new Font("Arial", 5, 32);
         tela = new JFrame("Registro");
+        tela.addWindowListener(new LidarUsuarios(this));
         tela.setPreferredSize(new Dimension (WIDTH, HEIGHT+100));
         tela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         tela.setVisible(true);
-        
+        DefaultListModel<Usuario> model = new DefaultListModel<>();
+        jListUsuarios= new JList<>(model);
         FlowLayout layout= new FlowLayout();
         layout.setAlignment(FlowLayout.CENTER);
         tela.setLayout(layout);
@@ -57,6 +69,7 @@ public class TelaRegistro {
         tela.getContentPane().setBackground(new Color(140, 200, 220, 80));
         tela.pack();
     }
+    
     private void desenhaFormCadastro() {
 
         JPanel painel = new JPanel();
@@ -101,6 +114,7 @@ public class TelaRegistro {
         campoSenha.setFont(fonte);
         JButton registrar = new JButton("Registrar");
         JButton cancelar = new JButton("Cancelar");
+        registrar.addActionListener(new AcaoRegistro(this));
         registrar.setFont(fonte2);
         cancelar.setFont(fonte2);
         //adicionar.addActionListener(new Adicionar(this));
@@ -121,5 +135,34 @@ public class TelaRegistro {
         painel.add(form, BorderLayout.WEST);
         tela.getContentPane().add(painel);
 
+    }
+    public void carregaUsuariosCadastrados(List<Usuario> listaUsuarios){
+        this.listaUsuarios = listaUsuarios;
+        if(listaUsuarios==null)
+            listaUsuarios= new ArrayList<>();
+        
+    }
+    public List<Usuario> getListaUsuarios(){
+        return this.listaUsuarios;
+    }
+    public void registrarUsuario(){
+        Email email = null;
+        Usuario pessoa = null;
+        DefaultListModel<Usuario> model = (DefaultListModel<Usuario>)jListUsuarios.getModel();
+        try {
+            email = new Email(campoEmail.getText());
+        } catch (EmailUnicoException ex) {
+            JOptionPane.showMessageDialog(tela, "Esse email já está cadastrado");
+        } catch (EmailFormatoException ex) {
+            JOptionPane.showMessageDialog(tela, "O email passado é inválido");
+        }
+        try {
+            pessoa = new Usuario(campoNome.getText(), email, campoSenha.getText());
+            model.addElement(pessoa);
+            listaUsuarios.add(pessoa);
+
+        } catch (Exception ex) {
+            
+        }
     }
 }
