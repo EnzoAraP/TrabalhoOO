@@ -54,7 +54,7 @@ public class TelaRegistro {
         fonte = new Font("Arial", 4, 17);
         fonte2 = new Font("Arial", 5, 20);
         fonte3 = new Font("Arial", 5, 32);
-        tela = new JFrame("Registro");
+        tela = new JFrame("Controle Usuário");
         tela.addWindowListener(new LidarUsuarios(this));
         tela.setPreferredSize(new Dimension (WIDTH, HEIGHT+100));
         tela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -65,13 +65,74 @@ public class TelaRegistro {
         layout.setAlignment(FlowLayout.CENTER);
         tela.setLayout(layout);
         
-        desenhaFormCadastro();
+        desenhaLogin();
         tela.getContentPane().setBackground(new Color(140, 200, 220, 80));
         tela.pack();
     }
     
-    private void desenhaFormCadastro() {
+    private void desenhaLogin() {
 
+        JPanel painel = new JPanel();
+        painel.setLayout(new BorderLayout());
+        painel.setPreferredSize(new Dimension(WIDTH / 3, HEIGHT));
+        JPanel form = new JPanel();
+        form.setBackground(new Color(140, 200, 220, 80));
+        form.setLayout(new BorderLayout(10, 20));
+        TitledBorder bordaForm = BorderFactory.createTitledBorder("Login");
+        bordaForm.setTitleFont(fonte3);
+        bordaForm.setTitlePosition(3);
+        bordaForm.setTitleJustification(2);
+        form.setBorder(bordaForm);
+        form.setSize(WIDTH / 3, (8 * HEIGHT) / 10);
+        JPanel painelCampos = new JPanel();
+        painelCampos.setBackground(new Color(120, 180, 190, 90));
+        painelCampos.setPreferredSize(new Dimension(WIDTH / 3, 5 * HEIGHT / 9));
+        painelCampos.setLayout(new GridLayout(4, 0, 16, 8));
+        campoEmail = new JTextField(15);
+        campoSenha = new JTextField(15);
+
+        JLabel[] labels = { new JLabel("E-mail"), new JLabel("Senha")};
+
+        for (int i = 0; i < 2; i++) {
+            labels[i].setLayout(new BorderLayout(0, 0));
+            labels[i].setFont(fonte2);
+            if (i != 0) {
+                labels[i].setBorder(BorderFactory.createEmptyBorder(30, 0, 0, 0));
+            }
+            painelCampos.add(labels[i]);
+        }
+
+
+        painelCampos.add(campoEmail, 1);
+
+        painelCampos.add(campoSenha, 3);
+        painelCampos.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(new Color(125, 145, 130), 1, true), BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+       
+        campoEmail.setFont(fonte);
+        campoEmail.setPreferredSize(new Dimension(10,10));
+        campoSenha.setFont(fonte);
+        JButton logar = new JButton("Logar");
+        JButton cancelar = new JButton("Cancelar");
+        logar.setFont(fonte2);
+        cancelar.setFont(fonte2);
+        logar.setBackground(new Color(140, 240, 170));
+        logar.addActionListener(new AcaoLogin(this));
+        cancelar.setBackground(new Color(230, 100, 100));
+        JPanel painelBotoes = new JPanel();
+        FlowLayout fLayout = new FlowLayout(FlowLayout.CENTER, 20, 20);
+        painelBotoes.setLayout(fLayout);
+        painelBotoes.setBackground(new Color(140, 200, 220, 0));
+        painelBotoes.add(logar);
+        painelBotoes.add(cancelar);
+        painelBotoes.setMinimumSize(new Dimension(WIDTH / 3, HEIGHT / 3));
+        painelBotoes.setBorder(BorderFactory.createEmptyBorder(20, 20, 60, 20));
+        form.add(painelCampos, BorderLayout.NORTH);
+        form.add(painelBotoes);
+        painel.add(form, BorderLayout.WEST);
+        tela.getContentPane().add(painel);
+
+    }
+    public void desenhaFormRegistro(){
         JPanel painel = new JPanel();
         painel.setLayout(new BorderLayout());
         painel.setPreferredSize(new Dimension(WIDTH / 3, HEIGHT));
@@ -88,11 +149,11 @@ public class TelaRegistro {
         painelCampos.setBackground(new Color(120, 180, 190, 90));
         painelCampos.setPreferredSize(new Dimension(WIDTH / 3, 5 * HEIGHT / 8));
         painelCampos.setLayout(new GridLayout(6, 0, 12, 8));
-        campoNome = new JTextField(30);
+         campoNome = new JTextField(30);
         campoEmail = new JTextField(15);
         campoSenha = new JTextField(15);
 
-        JLabel[] labels = {new JLabel("Nome"), new JLabel("E-mail"), new JLabel("Senha")};
+        JLabel[] labels = {new JLabel("Nome"),new JLabel("E-mail"), new JLabel("Senha")};
 
         for (int i = 0; i < 3; i++) {
             labels[i].setLayout(new BorderLayout(0, 0));
@@ -117,9 +178,6 @@ public class TelaRegistro {
         registrar.addActionListener(new AcaoRegistro(this));
         registrar.setFont(fonte2);
         cancelar.setFont(fonte2);
-        //adicionar.addActionListener(new Adicionar(this));
-        //editar.addActionListener(new Editar(this));
-        //remover.addActionListener(new Remover(this));
         registrar.setBackground(new Color(140, 240, 170));
         cancelar.setBackground(new Color(230, 100, 100));
         JPanel painelBotoes = new JPanel();
@@ -134,7 +192,6 @@ public class TelaRegistro {
         form.add(painelBotoes);
         painel.add(form, BorderLayout.WEST);
         tela.getContentPane().add(painel);
-
     }
     public void carregaUsuariosCadastrados(List<Usuario> listaUsuarios){
         this.listaUsuarios = listaUsuarios;
@@ -164,5 +221,24 @@ public class TelaRegistro {
         } catch (Exception ex) {
             
         }
+    }
+
+    public void logarUsuario() {
+       Usuario usuarioAtual=null; 
+       String email= campoEmail.getText();
+       String senha = campoSenha.getText();
+       for(Usuario usuario : listaUsuarios){
+           if(usuario.getEmailTexto().equals(email) && usuario.getSenha().equals(senha)){
+               usuarioAtual=usuario;
+               break;
+           }    
+       }
+       if(usuarioAtual!=null){
+           Usuario.atual=usuarioAtual;
+           JOptionPane.showMessageDialog(tela, "Logado");
+       }
+       else{
+           JOptionPane.showMessageDialog(tela, "Usuário com os dados passados não encontrado!");
+       }
     }
 }

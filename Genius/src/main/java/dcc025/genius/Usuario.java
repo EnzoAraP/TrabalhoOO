@@ -17,7 +17,7 @@ public class Usuario {
     private int recorde;
     private static int numUsuariosCriados=0;
     private static int numUsuariosTotal=0;
-    
+    public static Usuario atual=null;
     
     public Usuario(String nome, String email, String senha) throws EmailUnicoException, EmailFormatoException {
         this.nome = nome;
