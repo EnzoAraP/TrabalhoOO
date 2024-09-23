@@ -18,6 +18,14 @@ public class Usuario {
     private static int numUsuariosCriados=0;
     private static int numUsuariosTotal=0;
     public static Usuario atual=null;
+    public static int recordeSessao=0;
+    
+    public static void mudarRecordes(int novaPontuacao){
+        if(novaPontuacao>recordeSessao){
+            recordeSessao=novaPontuacao;
+            atual.setRecorde(novaPontuacao);
+        }
+    }
     
     public Usuario(String nome, String email, String senha) throws EmailUnicoException, EmailFormatoException {
         this.nome = nome;

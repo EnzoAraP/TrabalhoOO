@@ -1,0 +1,58 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package dcc025.genius;
+
+import java.util.List;
+
+/**
+ *
+ * @author Renan
+ */
+public abstract class CompeticaoMulti implements Competicao {
+
+    protected final List<Usuario> jogadores;
+    private int melhorPontuacao;
+    protected final int numJogadores ;
+    private boolean finalizado;
+    private int indiceAtual;
+    private Usuario jogadorAtual;
+
+    public List<Usuario> getJogadores() {
+        return jogadores;
+    }
+
+    public int getMelhorPontuacao() {
+        return melhorPontuacao;
+    }
+
+    public int getNumeroJogadores() {
+        return numJogadores;
+    }
+    
+    public CompeticaoMulti(List<Usuario> jogadores) throws Exception {
+        if(jogadores==null || jogadores.size()<2)
+            throw new Exception("Numero de jogadores inválidos");
+        this.jogadores=jogadores;
+        this.numJogadores=jogadores.size();
+        finalizado=false;
+    }
+
+    public abstract void organizar();
+    @Override
+    public void iniciar(){
+        indiceAtual=jogadores.indexOf(Usuario.atual);
+        jogadorAtual=Usuario.atual;
+    }
+
+    
+    @Override
+    public abstract boolean finalizado();
+
+    @Override
+    public void mudarTurno() {
+        
+    }
+    
+}
