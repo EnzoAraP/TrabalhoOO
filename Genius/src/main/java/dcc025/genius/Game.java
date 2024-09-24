@@ -41,10 +41,10 @@ public class Game extends JFrame {
 
     private Color getColor(int index) {
         switch (index) {
-            case 0: return Color.RED;
-            case 1: return Color.GREEN;
-            case 2: return Color.BLUE;
-            case 3: return Color.YELLOW;
+            case 0: return Color.RED.darker();
+            case 1: return Color.GREEN.darker();
+            case 2: return Color.BLUE.darker();
+            case 3: return Color.YELLOW.darker();
             default: return Color.BLACK;
         }
     }
@@ -63,7 +63,12 @@ public class Game extends JFrame {
     private void playSequence() {
         userTurn = false;
         currentStep = 0;
-
+         int tamanho;
+         tamanho =sequence.size();
+         for(int i =0;i<tamanho;i++)
+                 {
+                     System.out.println("Lista posicao ["+i+"] = "+sequence.get(i));
+                 }
         // Exibir a sequência com um atraso entre os destaques
         Timer sequenceTimer = new Timer(1000, new ActionListener() {
             private int sequenceIndex = 0; // Índice para rastrear a sequência mostrada
