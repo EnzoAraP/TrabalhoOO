@@ -8,28 +8,40 @@ package dcc025.genius;
  *
  * @author Renan
  */
-public class CompeticaoSolo implements Competicao{
+public class CompeticaoSolo  extends Competicao{
 
     private int melhor;
     private Usuario jogador;
     private int dificuldade;
+    private Game novojogo;
 
     public CompeticaoSolo(Usuario jogador) {
         this.jogador = jogador;
     }
     @Override
     public void iniciar() {
-        //Inicializa um objeto de jogo
+        
+        novojogo=Game.rodar(this);
     }
 
     @Override
     public boolean finalizado() {
-        //Usa um método do jogo para ver se acabouy
+        mudarTurno();
         return true;
     }
 
     @Override
     public void mudarTurno() {
+        System.out.println("Troca de turno");
+        int pontuacao=novojogo.pontuacao();
+        System.out.println("pontuacao: "+pontuacao);
+        System.out.println("melhor:"+melhor);
+        if(pontuacao>melhor)
+        {
+            System.out.println("Sua nova melhor pontuacao mudou ! agora vale "+pontuacao);
+            melhor =pontuacao;
+        }
+        novojogo.startGame();
         //Ver qual foi a pontuacao do jogo e verificar os recordes
     }
     

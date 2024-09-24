@@ -8,7 +8,7 @@ package dcc025.genius;
  *
  * @author Renan
  */
-public class CompeticaoDuo implements Competicao {
+public class CompeticaoDuo extends Competicao {
 
     private Usuario[] jogadores;
     private int turno;

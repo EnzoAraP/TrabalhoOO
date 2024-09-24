@@ -53,6 +53,13 @@ public class TelaSelecao {
         tela.getContentPane().setBackground(new Color(140, 200, 220, 80));
         tela.pack();
     }
+    public void jogoteste(Usuario testado)
+    {
+        
+     
+     CompeticaoSolo a = new CompeticaoSolo(testado);
+     a.iniciar(); 
+    }    
     private void desenhaBotoes(){
         JButton solo = new JButton("Solo(Local)");
         JButton duo = new JButton("Duo(Local)");
@@ -71,6 +78,21 @@ public class TelaSelecao {
         painelBotoes.setLayout(fLayout);
         painelBotoes.setBackground(new Color(140, 200, 220, 0));
         painelBotoes.add(solo);
+        int erro=0;
+        Usuario joga=null;
+        while (erro!=0)
+     {
+         erro=0;
+     try{
+      joga =new Usuario ("nome","Enzo.teste@gmail.com","123TesteA.");
+     }
+     catch(EmailFormatoException | EmailUnicoException e)
+     {
+         System.out.println("erro");
+         erro=-1;
+     }
+     }
+        solo.addActionListener(new Botaosolo(this, joga));
         painelBotoes.add(duo);
         painelBotoes.add(multiJogador);
         //painelBotoes.setPreferredSize(new Dimension(WIDTH / 2, HEIGHT / 2));

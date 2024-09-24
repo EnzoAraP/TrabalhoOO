@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author Renan
  */
-public abstract class CompeticaoMulti implements Competicao {
+public abstract class CompeticaoMulti extends Competicao {
 
     protected final List<Usuario> jogadores;
     private int melhorPontuacao;

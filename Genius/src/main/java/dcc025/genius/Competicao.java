@@ -4,15 +4,15 @@
  */
 package dcc025.genius;
 
-
 /**
  *
- * @author Renan
+ * @author Nitro 5
  */
-public interface Competicao {
+public abstract class Competicao {
     
-    public void iniciar();
-    public boolean finalizado();
-    public void mudarTurno();
+    public abstract void iniciar();
+    public abstract boolean finalizado();
+    public abstract void mudarTurno();
     
 }
+
