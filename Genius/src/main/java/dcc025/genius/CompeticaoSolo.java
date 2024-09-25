@@ -21,7 +21,7 @@ public class CompeticaoSolo  extends Competicao{
     @Override
     public void iniciar() {
         
-        novojogo=Game.rodar(this);
+        novojogo=Game.rodar(this,1);
     }
 
     @Override

@@ -16,13 +16,15 @@ public class Game extends JFrame {
     private boolean userTurn;
     Competicao teste;
     int tamanhoa=0;
+    int dificuldade;
 
-    public Game(Competicao a) {
+    public Game(Competicao a,int dificuldade) {
         teste=a;
         sequence = new ArrayList<>();
         currentStep = 0;
         random = new Random();
         userTurn = false;
+        this.dificuldade=dificuldade;
 
         // Configuração da interface
         setTitle("Genius Game");
@@ -66,7 +68,20 @@ public class Game extends JFrame {
         System.out.println("tamanho aumentou");
         System.out.println("valor tamanho pos somado:"+tamanhoa);
     }
-
+    private int dificulade( int a)
+    {
+        return switch(a)
+        {
+            
+            case 1-> 700;
+            case 2-> 500;
+            case 3-> 300;
+            case 4-> 200;
+            default ->700;
+        } ;   
+        
+            
+    }
     private void playSequence() {
         userTurn = false;
         currentStep = 0;
@@ -77,7 +92,7 @@ public class Game extends JFrame {
                      System.out.println("Lista posicao ["+i+"] = "+sequence.get(i));
                  }
         // Exibir a sequência com um atraso entre os destaques
-        Timer sequenceTimer = new Timer(300, new ActionListener() {
+        Timer sequenceTimer = new Timer(dificulade(dificuldade), new ActionListener() {
             private int sequenceIndex = 0; // Índice para rastrear a sequência mostrada
             private boolean highlighting = false; // Controle para exibir o botão
 
@@ -154,10 +169,10 @@ public class Game extends JFrame {
         tamanhoa =0;
         return(pontuacao);
     }
-    public static  Game rodar(Competicao a ) {
+    public static  Game rodar(Competicao a, int dificilade ) {
       
             
-            Game game = new Game(a);
+            Game game = new Game(a, dificilade );
             game.setVisible(true);
             
        
