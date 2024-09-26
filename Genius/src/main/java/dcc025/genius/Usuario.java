@@ -60,9 +60,13 @@ public class Usuario {
         competicoesAtivas.add(c);
     }
     public int numeroCompeticoesAtivas(){
+        if(competicoesAtivas==null)
+            return 0;
         return competicoesAtivas.size();
     }
     public int numeroCompeticoesPassadas(){
+        if(competicoesPassadas==null)
+            return 0;
         return competicoesPassadas.size();
     }
     public void finalizaCompeticao(Competicao c){

@@ -20,6 +20,9 @@ public class Email {
             throw new EmailUnicoException();
         parteFormatoEmail(email);
     }
+    public static boolean removeDaLista(String email){
+        return emails.remove(email);
+    }
     public void setEmail(String email) throws EmailUnicoException, EmailFormatoException{
         emails.remove(emailCompleto);
         if(emails.contains(email)){

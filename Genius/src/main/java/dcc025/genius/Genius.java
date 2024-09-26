@@ -1,14 +1,21 @@
 package dcc025.genius;
 
+
+
 public class Genius {
 
     public static void main(String[] args) {
+        //Scanner scanner = new Scanner(System.in);
     //  UI teste= new UI();
      //   teste.Telainicial();
       //TelaSelecao test= new TelaSelecao();
       //test.desenha();
       TelaInicial ini = new TelaInicial();
       ini.desenha();
+      //scanner.next();
+      //TelaListaUsuarios tel = new TelaControleUsuarios();
+      
+      //tel.desenha();
 //     Usuario joga=null;
 //     int erro =-1;
 //     while (erro!=0)

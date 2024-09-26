@@ -52,6 +52,7 @@ public class TelaRegistro {
     Font fonte3;
     private TelaSelecao telaSelecao;
     private TelaInicial telIni;
+    private TelaControleUsuarios telCon;
     private boolean modoLogin;
 
     public TelaRegistro() {
@@ -63,6 +64,10 @@ public class TelaRegistro {
      public TelaRegistro(boolean modoLogin,TelaInicial tel){
         this.modoLogin=modoLogin;
         informarTelaSelecao(tel);
+    }
+     public TelaRegistro(boolean modoLogin,TelaControleUsuarios tel){
+        this.modoLogin=modoLogin;
+        this.telCon=tel;
     }
     
     public void informarTelaSelecao(TelaInicial tel){
@@ -239,6 +244,8 @@ public class TelaRegistro {
             pessoa = new Usuario(campoNome.getText(), email, campoSenha.getText());
             model.addElement(pessoa);
             listaUsuarios.add(pessoa);
+            if(telCon!=null)
+                telCon.atualizaModel(pessoa);
             JOptionPane.showMessageDialog(tela, "Usuário registrado com sucesso");
 
         } catch (Exception ex) {
@@ -279,6 +286,8 @@ public class TelaRegistro {
         public void windowClosing(WindowEvent e) {
             if(telIni!=null)   
               telIni.mostrar(true);
+            else if(telCon!=null)
+                telCon.mostrar(true);
          }
 
         @Override

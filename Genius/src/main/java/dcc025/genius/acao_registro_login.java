@@ -14,15 +14,25 @@ import java.awt.event.ActionListener;
 public class acao_registro_login implements ActionListener {
   TelaRegistro tela;
    TelaInicial telaIni;
+   TelaControleUsuarios telaCon;
     public acao_registro_login(TelaRegistro tela,TelaInicial telaIni) {
         this.tela = tela;
         this.telaIni=telaIni;
+        this.telaCon=null;
+    }
+    public acao_registro_login(TelaRegistro tela,TelaControleUsuarios telaCon) {
+        this.tela = tela;
+        this.telaIni=null;
+        this.telaCon=telaCon;
     }
   
     
     @Override
     public void actionPerformed(ActionEvent e) {
-           telaIni.ocultar();
+           if(telaIni!=null)
+               telaIni.mostrar(false);
+           else if(telaCon!=null)
+               telaCon.mostrar(false);
            tela.desenha();
     }
     
