@@ -11,16 +11,19 @@ import java.awt.event.ActionListener;
  *
  * @author Renan
  */
-public class AcaoLogin implements ActionListener {
-
-    TelaRegistro tela;
-    TelaSelecao tela2;
-    public AcaoLogin(TelaRegistro tela) {
-        this.tela=tela;
+public class acao_registro_login implements ActionListener {
+  TelaRegistro tela;
+   TelaInicial telaIni;
+    public acao_registro_login(TelaRegistro tela,TelaInicial telaIni) {
+        this.tela = tela;
+        this.telaIni=telaIni;
     }
+  
+    
     @Override
     public void actionPerformed(ActionEvent e) {
-        tela.logarUsuario();
+           telaIni.ocultar();
+           tela.desenha();
     }
     
 }

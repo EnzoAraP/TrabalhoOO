@@ -17,13 +17,16 @@ import java.util.Set;
  */
 public class LidarUsuarios implements WindowListener {
 
-    TelaRegistro telaR;
-    UsuarioPersistence usrPrs;
-    public LidarUsuarios(TelaRegistro telaR) {
-        this.telaR = telaR;
+    private TelaInicial telaI;
+    private UsuarioPersistence usrPrs;
+    public LidarUsuarios(TelaInicial telaI) {
+        this.telaI = telaI;
         usrPrs = new UsuarioPersistence();
     }
-    
+    public LidarUsuarios(){
+        telaI=null;
+        usrPrs = new UsuarioPersistence();
+    }
     @Override
     public void windowOpened(WindowEvent e) {
         
@@ -32,12 +35,16 @@ public class LidarUsuarios implements WindowListener {
         for(Usuario user : usuarios)
             emails.add(user.getEmailTexto());
         Email.setListaInicial(emails);
-        telaR.carregaUsuariosCadastrados(usuarios);
+        TelaRegistro.carregaUsuariosCadastrados(usuarios);
     }
 
     @Override
     public void windowClosing(WindowEvent e) {
-        usrPrs.salvar(telaR.getListaUsuarios());
+        List<Usuario> usuarios=TelaRegistro.getListaUsuarios();
+        for(Usuario user : usuarios){
+            System.out.println(user.getNome()+" "+user.getRecorde());
+        }
+        usrPrs.salvar(TelaRegistro.getListaUsuarios());
     }
 
     @Override

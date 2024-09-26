@@ -28,7 +28,7 @@ public class Game extends JFrame {
 
         // Configuração da interface
         setTitle("Genius Game");
-        setSize(400, 400);
+        setSize(600, 600);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLayout(new GridLayout(2, 2));
 
@@ -42,7 +42,7 @@ public class Game extends JFrame {
             add(buttons[i]);
         }
 
-        startGame();
+        
     }
 
     private Color getColor(int index) {
@@ -73,7 +73,7 @@ public class Game extends JFrame {
         return switch(a)
         {
             
-            case 1-> 700;
+            case 1-> 400;
             case 2-> 500;
             case 3-> 300;
             case 4-> 200;
@@ -83,6 +83,7 @@ public class Game extends JFrame {
             
     }
     private void playSequence() {
+        teste.atualizaPontuacao();
         userTurn = false;
         currentStep = 0;
          int tamanho;
@@ -165,7 +166,7 @@ public class Game extends JFrame {
         
             System.out.println("valor tamanho"+tamanhoa);
         
-        int pontuacao= tamanhoa*100;
+        int pontuacao= (tamanhoa-1);
         tamanhoa =0;
         return(pontuacao);
     }

@@ -32,5 +32,10 @@ public class CampeonatoChaves extends CompeticaoMulti {
     public boolean finalizado() {
         return vencedor!=-1;
     }
+
+    @Override
+    public void atualizaPontuacao() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
 }

@@ -11,16 +11,21 @@ import java.awt.event.ActionListener;
  *
  * @author Renan
  */
-public class AcaoLogin implements ActionListener {
+public class BotaoJogar implements ActionListener {
 
-    TelaRegistro tela;
-    TelaSelecao tela2;
-    public AcaoLogin(TelaRegistro tela) {
-        this.tela=tela;
+  
+     private TelaSelecao telao;
+     private Usuario enviado;
+     private int tipo;
+   public BotaoJogar(TelaSelecao receptor,Usuario a,int tipo)
+    {
+        this.tipo=tipo;
+        telao = receptor;
+        enviado =a;
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        tela.logarUsuario();
+        telao.jogoTeste2(enviado,tipo);
     }
     
 }

@@ -41,5 +41,10 @@ public class CampeonatoPontos extends CompeticaoMulti {
         return finalizados==numJogadores;
         
     }
+
+    @Override
+    public void atualizaPontuacao() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
 }

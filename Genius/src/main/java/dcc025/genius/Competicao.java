@@ -13,6 +13,7 @@ public abstract class Competicao {
     public abstract void iniciar();
     public abstract boolean finalizado();
     public abstract void mudarTurno();
+    public abstract void atualizaPontuacao();
     
 }
 

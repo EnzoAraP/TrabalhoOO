@@ -4,6 +4,9 @@
  */
 package dcc025.genius;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  *
@@ -15,6 +18,8 @@ public class Usuario {
     private Email email;
     private String senha;
     private int recorde;
+    private List<Competicao> competicoesAtivas;
+    private List<Competicao> competicoesPassadas;
     private static int numUsuariosCriados=0;
     private static int numUsuariosTotal=0;
     public static Usuario atual=null;
@@ -33,6 +38,8 @@ public class Usuario {
         this.senha = senha;
         numUsuariosCriados++;
         this.id=numUsuariosCriados;
+        competicoesAtivas = new ArrayList<>();
+        competicoesPassadas = new ArrayList<>();
         recorde=0;
     }
     public Usuario(String nome, Email email, String senha) throws Exception {
@@ -49,7 +56,20 @@ public class Usuario {
     public int getRecorde() {
         return recorde;
     }
-
+    public void adicionaCompeticao(Competicao c){
+        competicoesAtivas.add(c);
+    }
+    public int numeroCompeticoesAtivas(){
+        return competicoesAtivas.size();
+    }
+    public int numeroCompeticoesPassadas(){
+        return competicoesPassadas.size();
+    }
+    public void finalizaCompeticao(Competicao c){
+        boolean removeu=competicoesAtivas.remove(c);
+        if(removeu)
+            competicoesPassadas.add(c);
+    }
     public void setRecorde(int novoRecorde) {
         if(novoRecorde>this.recorde)
           this.recorde = novoRecorde;

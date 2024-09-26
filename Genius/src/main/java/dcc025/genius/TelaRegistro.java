@@ -11,6 +11,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -26,6 +28,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 import javax.swing.border.TitledBorder;
 
 /**
@@ -42,30 +45,49 @@ public class TelaRegistro {
     private JTextField campoEmail;
     private JTextField campoSenha;
     private JList<Usuario> jListUsuarios;
-    private List<Usuario> listaUsuarios;
+    private static List<Usuario> listaUsuarios;
     JTable tabela;
     Font fonte;
     Font fonte2;
     Font fonte3;
-    
+    private TelaSelecao telaSelecao;
+    private TelaInicial telIni;
+    private boolean modoLogin;
 
+    public TelaRegistro() {
+        modoLogin=false;
+    }
+    public TelaRegistro(boolean modoLogin){
+        this.modoLogin=modoLogin;
+    }
+     public TelaRegistro(boolean modoLogin,TelaInicial tel){
+        this.modoLogin=modoLogin;
+        informarTelaSelecao(tel);
+    }
+    
+    public void informarTelaSelecao(TelaInicial tel){
+        telIni = tel;
+    }
     public void desenha() {
         
         fonte = new Font("Arial", 4, 17);
         fonte2 = new Font("Arial", 5, 20);
+        
         fonte3 = new Font("Arial", 5, 32);
         tela = new JFrame("Controle Usuário");
-        tela.addWindowListener(new LidarUsuarios(this));
+       tela.addWindowListener(new ControleJanela());
         tela.setPreferredSize(new Dimension (WIDTH, HEIGHT+100));
-        tela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        tela.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         tela.setVisible(true);
         DefaultListModel<Usuario> model = new DefaultListModel<>();
         jListUsuarios= new JList<>(model);
         FlowLayout layout= new FlowLayout();
         layout.setAlignment(FlowLayout.CENTER);
         tela.setLayout(layout);
-        
-        desenhaLogin();
+        if(modoLogin)
+         desenhaLogin();
+        else
+         desenhaFormRegistro();   
         tela.getContentPane().setBackground(new Color(140, 200, 220, 80));
         tela.pack();
     }
@@ -193,14 +215,14 @@ public class TelaRegistro {
         painel.add(form, BorderLayout.WEST);
         tela.getContentPane().add(painel);
     }
-    public void carregaUsuariosCadastrados(List<Usuario> listaUsuarios){
-        this.listaUsuarios = listaUsuarios;
+    public static void carregaUsuariosCadastrados(List<Usuario> lista){
+        listaUsuarios = lista;
         if(listaUsuarios==null)
             listaUsuarios= new ArrayList<>();
         
     }
-    public List<Usuario> getListaUsuarios(){
-        return this.listaUsuarios;
+    public static List<Usuario> getListaUsuarios(){
+        return listaUsuarios;
     }
     public void registrarUsuario(){
         Email email = null;
@@ -217,6 +239,7 @@ public class TelaRegistro {
             pessoa = new Usuario(campoNome.getText(), email, campoSenha.getText());
             model.addElement(pessoa);
             listaUsuarios.add(pessoa);
+            JOptionPane.showMessageDialog(tela, "Usuário registrado com sucesso");
 
         } catch (Exception ex) {
             
@@ -236,9 +259,47 @@ public class TelaRegistro {
        if(usuarioAtual!=null){
            Usuario.atual=usuarioAtual;
            JOptionPane.showMessageDialog(tela, "Logado");
+           telaSelecao = new TelaSelecao();
+           telaSelecao.desenha();
+           tela.dispose();
        }
        else{
            JOptionPane.showMessageDialog(tela, "Usuário com os dados passados não encontrado!");
        }
+    }
+    
+    private class ControleJanela implements WindowListener{
+
+        @Override
+        public void windowOpened(WindowEvent e) {
+
+        }
+
+        @Override
+        public void windowClosing(WindowEvent e) {
+            if(telIni!=null)   
+              telIni.mostrar(true);
+         }
+
+        @Override
+        public void windowClosed(WindowEvent e) {
+        }
+
+        @Override
+        public void windowIconified(WindowEvent e) {
+        }
+
+        @Override
+        public void windowDeiconified(WindowEvent e) {
+        }
+
+        @Override
+        public void windowActivated(WindowEvent e) {
+        }
+
+        @Override
+        public void windowDeactivated(WindowEvent e) {
+        }
+        
     }
 }

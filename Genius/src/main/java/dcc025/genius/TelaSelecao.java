@@ -8,6 +8,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
@@ -33,6 +35,7 @@ public class TelaSelecao {
     private JTextField campoEmail;
     private JTextField campoSenha;
     private List<Usuario> listaUsuarios;
+    private TelaInicial telaIni;
     JTable tabela;
     Font fonte;
     Font fonte2;
@@ -44,6 +47,7 @@ public class TelaSelecao {
         tela = new JFrame("Selecionar Modo de jogo");
         tela.setPreferredSize(new Dimension (WIDTH, HEIGHT));
         tela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        tela.addWindowListener(new LidarFechamentoDeTela());
         tela.setVisible(true);
         FlowLayout layout= new FlowLayout();
         layout.setAlignment(FlowLayout.CENTER);
@@ -59,7 +63,22 @@ public class TelaSelecao {
      
      CompeticaoSolo a = new CompeticaoSolo(testado);
      a.iniciar(); 
-    }    
+    } 
+    public void jogoTeste2(Usuario testado,int tipo){
+     Competicao comp;
+        switch(tipo){
+         case 1:
+             comp = new CompeticaoSolo(testado);
+             break;
+         case 2:
+             comp = new CompeticaoDuo(testado);
+             break;
+         default:
+             comp = new CompeticaoSolo(testado);
+             break;
+        } 
+     comp.iniciar();
+    }
     private void desenhaBotoes(){
         JButton solo = new JButton("Solo(Local)");
         JButton duo = new JButton("Duo(Local)");
@@ -92,7 +111,8 @@ public class TelaSelecao {
          erro=-1;
      }
      }
-        solo.addActionListener(new Botaosolo(this, joga));
+        solo.addActionListener(new Botaosolo(this, Usuario.atual));
+        duo.addActionListener(new BotaoJogar(this,Usuario.atual,2));
         painelBotoes.add(duo);
         painelBotoes.add(multiJogador);
         //painelBotoes.setPreferredSize(new Dimension(WIDTH / 2, HEIGHT / 2));
@@ -102,5 +122,44 @@ public class TelaSelecao {
         painelBotoes.setBorder(BorderFactory.createCompoundBorder(bordaTexto, BorderFactory.createEmptyBorder(20, 20, 60, 20)));
         
         tela.add(painelBotoes);
+    }
+    public void ocultar(){
+        tela.setVisible(false);
+    }
+    public void mostrar(boolean b){
+        tela.setVisible(b);
+    }
+    private class LidarFechamentoDeTela extends LidarUsuarios{
+
+        public LidarFechamentoDeTela() {
+            super();
+        }
+
+        @Override
+        public void windowOpened(WindowEvent e) {
+        }
+
+        
+
+        @Override
+        public void windowClosed(WindowEvent e) {
+        }
+
+        @Override
+        public void windowIconified(WindowEvent e) {
+        }
+
+        @Override
+        public void windowDeiconified(WindowEvent e) {
+        }
+
+        @Override
+        public void windowActivated(WindowEvent e) {
+        }
+
+        @Override
+        public void windowDeactivated(WindowEvent e) {
+        }
+        
     }
 }
