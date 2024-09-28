@@ -1,5 +1,7 @@
 package dcc025.genius;
 
+import dcc025.genius.Telas.TelaInicial;
+
 
 
 public class Genius {
