@@ -5,8 +5,7 @@
 package dcc025.genius.Telas;
 
 
-import dcc025.genius.Exceptions.EmailUnicoException;
-import dcc025.genius.Exceptions.EmailFormatoException;
+import dcc025.genius.Exceptions.*;
 import dcc025.genius.Buttons.*;
 import dcc025.genius.Usuario.Email;
 import dcc025.genius.Usuario.Usuario;
@@ -75,7 +74,10 @@ public class TelaRegistro {
         this.modoLogin=modoLogin;
         this.telCon=tel;
     }
-    
+    public JFrame getTela()
+    {
+        return this.tela;
+    }
     public void informarTelaSelecao(TelaInicial tel){
         telIni = tel;
     }
@@ -151,6 +153,7 @@ public class TelaRegistro {
         logar.setBackground(new Color(140, 240, 170));
         logar.addActionListener(new AcaoLogin(this));
         cancelar.setBackground(new Color(230, 100, 100));
+        cancelar.addActionListener(new BotaoCancelar(telIni,this));
         JPanel painelBotoes = new JPanel();
         FlowLayout fLayout = new FlowLayout(FlowLayout.CENTER, 20, 20);
         painelBotoes.setLayout(fLayout);
@@ -209,6 +212,7 @@ public class TelaRegistro {
         JButton registrar = new JButton("Registrar");
         JButton cancelar = new JButton("Cancelar");
         registrar.addActionListener(new AcaoRegistro(this));
+        cancelar.addActionListener(new BotaoCancelar(telIni,this));
         registrar.setFont(fonte2);
         cancelar.setFont(fonte2);
         registrar.setBackground(new Color(140, 240, 170));
@@ -246,6 +250,7 @@ public class TelaRegistro {
         } catch (EmailFormatoException ex) {
             JOptionPane.showMessageDialog(tela, "O email passado é inválido");
         }
+        
         try {
             pessoa = new Usuario(campoNome.getText(), email, campoSenha.getText());
             model.addElement(pessoa);
@@ -254,7 +259,12 @@ public class TelaRegistro {
                 telCon.atualizaModel(pessoa);
             JOptionPane.showMessageDialog(tela, "Usuário registrado com sucesso");
 
-        } catch (Exception ex) {
+        }
+        catch(SenhaException e)
+        {
+            JOptionPane.showMessageDialog(tela, "A senha está invalida! Ela deve ser maior que 8 palavras e possuir pelo menos letra maiuscula!");
+        }
+        catch (Exception ex) {
             
         }
     }

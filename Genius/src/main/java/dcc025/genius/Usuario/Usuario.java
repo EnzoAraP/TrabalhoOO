@@ -5,8 +5,7 @@
 package dcc025.genius.Usuario;
 
 import dcc025.genius.CompeticaoeCampeonato.Competicao;
-import dcc025.genius.Exceptions.EmailUnicoException;
-import dcc025.genius.Exceptions.EmailFormatoException;
+import dcc025.genius.Exceptions.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,22 +34,22 @@ public class Usuario {
         }
     }
     
-    public Usuario(String nome, String email, String senha) throws EmailUnicoException, EmailFormatoException {
+    public Usuario(String nome, String email, String senha) throws EmailUnicoException, EmailFormatoException , SenhaException {
         this.nome = nome;
         this.email = new Email(email);
-        this.senha = senha;
+        this.senha = testasenha(senha);
         numUsuariosCriados++;
         this.id=numUsuariosCriados;
         competicoesAtivas = new ArrayList<>();
         competicoesPassadas = new ArrayList<>();
         recorde=0;
     }
-    public Usuario(String nome, Email email, String senha) throws Exception {
+    public Usuario(String nome, Email email, String senha) throws Exception,SenhaException {
         if(nome==null || email==null || senha== null)
             throw new Exception("Variáveis nulas passadas");
         this.nome = nome;
         this.email = email;
-        this.senha = senha;
+        this.senha = testasenha(senha);
         numUsuariosCriados++;
         this.id=numUsuariosCriados;
         recorde=0;
@@ -119,6 +118,25 @@ public class Usuario {
     
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+    public static String testasenha (String senha) throws SenhaException
+    {
+        System.out.println("Testou senha");
+        int existe=-1;
+        if(senha.length()<8)
+        {
+            throw new SenhaException();
+        }
+        for (int i=0;i<senha.length();i++ )
+        {
+            if(senha.charAt(i)>='A'&&senha.charAt(i)<='Z')
+                existe++;
+        }
+        if (existe==-1)
+        {
+    throw new SenhaException();
+        }
+        return senha;
     }
 
     @Override

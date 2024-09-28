@@ -5,16 +5,14 @@
 package dcc025.genius.Usuario;
 
 
-import dcc025.genius.Exceptions.EmailUnicoException;
-import dcc025.genius.Exceptions.EmailFormatoException;
-
+import dcc025.genius.Exceptions.*;
 /**
  *
  * @author Renan
  */
 public class Administrador extends Usuario {
     
-    public Administrador(String nome, String email, String senha) throws EmailUnicoException, EmailFormatoException {
+    public Administrador(String nome, String email, String senha) throws EmailUnicoException, EmailFormatoException, SenhaException {
         super(nome, email, senha);
     }
     

@@ -5,8 +5,7 @@
 package dcc025.genius.Telas;
 
 import dcc025.genius.Telas.TelaInicial;
-import dcc025.genius.Exceptions.EmailUnicoException;
-import dcc025.genius.Exceptions.EmailFormatoException;
+import dcc025.genius.Exceptions.*;
 import dcc025.genius.Buttons.Botaosolo;
 import dcc025.genius.Buttons.BotaoJogar;
 import dcc025.genius.CompeticaoeCampeonato.Competicao;
@@ -115,7 +114,7 @@ public class TelaSelecao {
      try{
       joga =new Usuario ("nome","Enzo.teste@gmail.com","123TesteA.");
      }
-     catch(EmailFormatoException | EmailUnicoException e)
+     catch(EmailFormatoException | EmailUnicoException | SenhaException e)
      {
          System.out.println("erro");
          erro=-1;

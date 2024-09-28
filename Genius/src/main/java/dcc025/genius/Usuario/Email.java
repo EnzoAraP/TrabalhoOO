@@ -55,7 +55,10 @@ public class Email {
     public static void setListaInicial(Set<String> emails) {
         Email.emails = emails;
     }
-     
+     public static void removeEmailespecifica()
+     {
+         emails.remove("enz@gmail.com");
+     }
     @Override
     public String toString() {
         return emailCompleto;

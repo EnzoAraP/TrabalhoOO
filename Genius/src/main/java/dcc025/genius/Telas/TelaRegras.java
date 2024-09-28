@@ -8,14 +8,15 @@ package dcc025.genius.Telas;
  *
  * @author Nitro 5
  */
+import dcc025.genius.Buttons.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 public class TelaRegras {
      private final JFrame tela;
-    private final int WIDTH = 800;
-    private final int HEIGHT = 550;
+    private final int WIDTH = 900;
+    private final int HEIGHT = 625;
     private final TelaInicial telainicial;
     private final Font fonteGrande;
     private final Font fonte;
@@ -161,9 +162,29 @@ public class TelaRegras {
      
        panel.add(ExMult, constraints);
         }
+                 {//Voltar Button
+                      JButton voltar = new JButton("Voltar");
+                      voltar.addActionListener(new BotaoVoltar(telainicial,this));
+                      JPanel painelBotoes = new JPanel();
+                          FlowLayout fLayout = new FlowLayout(FlowLayout.CENTER, 20, 20);
+                       painelBotoes.setLayout(fLayout);
+                      painelBotoes.setBackground(new Color(140, 200, 220, 0));
+                      voltar.setBackground(new Color(140, 200, 220));
+                      painelBotoes.add(voltar);
+                      constraints.gridx = 3; // Grid column
+        constraints.gridy = 3; // Grid row
+        constraints.gridwidth = 1; 
+        constraints.gridheight = 1; 
+        constraints.insets = new Insets(10, 10, 10, 10); // Padding
+                      panel.add(painelBotoes, constraints);
+                 }
          tela.add(panel);       
         
       
+    }
+    public JFrame getTela()
+    {
+        return this.tela;
     }
     public final void mostrar(boolean mostrar) {
       tela.setVisible(mostrar);
