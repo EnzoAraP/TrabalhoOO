@@ -279,10 +279,12 @@ public class TelaRegistro {
                break;
            }    
        }
+       
        if(usuarioAtual!=null){
            Usuario.atual=usuarioAtual;
            JOptionPane.showMessageDialog(tela, "Logado");
            telaSelecao = new TelaSelecao();
+           telaSelecao.settlini(telIni);
            telaSelecao.desenha();
            tela.dispose();
        }

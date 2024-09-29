@@ -115,8 +115,10 @@ public class CompeticaoDuo extends Competicao {
           fim=true;  
           novojogo.startGame();
         }
-        else
+        else{
+            tldificuldade.mostrar(true);
             novojogo.getTela().dispose();
+        }
     }
 
     @Override

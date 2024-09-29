@@ -67,6 +67,7 @@ public class Game  {
         currentStep = 0;
         addNewStep();
         playSequence();
+      
     }
 
     private void addNewStep() {
