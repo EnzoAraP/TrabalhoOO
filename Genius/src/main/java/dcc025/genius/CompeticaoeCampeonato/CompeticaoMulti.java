@@ -20,6 +20,7 @@ public abstract class CompeticaoMulti extends Competicao {
     private boolean finalizado;
     private int indiceAtual;
     private Usuario jogadorAtual;
+    int dificuldade;
 
     public List<Usuario> getJogadores() {
         return jogadores;
@@ -33,10 +34,11 @@ public abstract class CompeticaoMulti extends Competicao {
         return numJogadores;
     }
     
-    public CompeticaoMulti(List<Usuario> jogadores) throws Exception {
+    public CompeticaoMulti(List<Usuario> jogadores,int dificuldade) throws Exception {
         if(jogadores==null || jogadores.size()<2)
             throw new Exception("Numero de jogadores inválidos");
         this.jogadores=jogadores;
+        this.dificuldade=dificuldade;
         this.numJogadores=jogadores.size();
         finalizado=false;
     }

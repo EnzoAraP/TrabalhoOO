@@ -61,13 +61,7 @@ public class TelaInicial {
         tela.getContentPane().setBackground(new Color(140, 200, 220, 80));
         tela.pack();
     }
-    public void jogoteste(Usuario testado)
-    {
-        
-     
-     CompeticaoSolo a = new CompeticaoSolo(testado);
-     a.iniciar(); 
-    }    
+       
     private void desenhaBotoes(){
         JButton login = new JButton("Fazer Login");
         JButton registro = new JButton("Registrar-se");

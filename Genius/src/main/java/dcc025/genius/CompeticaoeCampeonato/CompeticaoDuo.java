@@ -32,21 +32,23 @@ public class CompeticaoDuo extends Competicao {
     private int atual;
     private int vencedor;
     private JLabel pontuacaoLabel[];
+    private int dificuldade;
     
-    public CompeticaoDuo(Usuario jogador) {
+    public CompeticaoDuo(Usuario jogador, int dificuldade) {
         this.jogador = jogador;
         fim = false;
         pontuacoes = new int[2];
         pontuacoes[0]=pontuacoes[1]=-1;
         atual=0;
         vencedor=0;
+        this.dificuldade=dificuldade;
         melhor=jogador.getRecorde();
     }
 
     @Override
     public void iniciar() {
         
-        novojogo = Game.rodar(this, 1);
+        novojogo = Game.rodar(this, dificuldade);
         JPanel painelPont = new JPanel();
         // Configuração da interface
         painelPont.setBorder(BorderFactory.createTitledBorder(BorderFactory.createDashedBorder(Color.DARK_GRAY), "Pontuações", 2, 1, new Font("Arial",5,32), Color.blue));

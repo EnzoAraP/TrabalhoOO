@@ -17,7 +17,7 @@ public class CampeonatoChaves extends CompeticaoMulti {
     private List<Integer> vencedores;
     private int vencedor;
     public CampeonatoChaves(List<Usuario> jogadores) throws Exception {
-        super(jogadores);
+        super(jogadores,1);
         if(jogadores.size()!=2 && jogadores.size()!=4 && jogadores.size()!=8)
             throw new Exception("Numero inválido de jogadores");
         vencedor=-1;

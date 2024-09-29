@@ -66,28 +66,7 @@ public class TelaSelecao {
         tela.getContentPane().setBackground(new Color(140, 200, 220, 80));
         tela.pack();
     }
-    public void jogoteste(Usuario testado)
-    {
-        
-     
-     CompeticaoSolo a = new CompeticaoSolo(testado);
-     a.iniciar(); 
-    } 
-    public void jogoTeste2(Usuario testado,int tipo){
-     Competicao comp;
-        switch(tipo){
-         case 1:
-             comp = new CompeticaoSolo(testado);
-             break;
-         case 2:
-             comp = new CompeticaoDuo(testado);
-             break;
-         default:
-             comp = new CompeticaoSolo(testado);
-             break;
-        } 
-     comp.iniciar();
-    }
+  
     private void desenhaBotoes(){
         JButton solo = new JButton("Solo(Local)");
         JButton duo = new JButton("Duo(Local)");
@@ -106,22 +85,9 @@ public class TelaSelecao {
         painelBotoes.setLayout(fLayout);
         painelBotoes.setBackground(new Color(140, 200, 220, 0));
         painelBotoes.add(solo);
-        int erro=0;
-        Usuario joga=null;
-        while (erro!=0)
-     {
-         erro=0;
-     try{
-      joga =new Usuario ("nome","Enzo.teste@gmail.com","123TesteA.");
-     }
-     catch(EmailFormatoException | EmailUnicoException | SenhaException e)
-     {
-         System.out.println("erro");
-         erro=-1;
-     }
-     }
-        solo.addActionListener(new Botaosolo(this, Usuario.atual));
-        duo.addActionListener(new BotaoJogar(this,Usuario.atual,2));
+     
+        solo.addActionListener(new Botaosolo( new TelaDificuldade(this,1),this));
+        duo.addActionListener(new BotaoJogar(new TelaDificuldade(this,2),this));
         painelBotoes.add(duo);
         painelBotoes.add(multiJogador);
         //painelBotoes.setPreferredSize(new Dimension(WIDTH / 2, HEIGHT / 2));

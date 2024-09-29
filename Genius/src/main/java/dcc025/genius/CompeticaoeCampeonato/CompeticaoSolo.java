@@ -19,15 +19,17 @@ public class CompeticaoSolo  extends Competicao{
     private int dificuldade;
     private Game novojogo;
     private int pontuacao;
+   
 
-    public CompeticaoSolo(Usuario jogador) {
+    public CompeticaoSolo(Usuario jogador,int dificuldade) {
         this.jogador = jogador;
+        this.dificuldade=dificuldade;
         pontuacao=-1;
     }
     @Override
     public void iniciar() {
         
-        novojogo=Game.rodar(this,1);
+        novojogo=Game.rodar(this,dificuldade);
         novojogo.startGame();
     }
 

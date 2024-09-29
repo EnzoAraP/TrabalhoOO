@@ -5,29 +5,29 @@
 package dcc025.genius.Buttons;
 
 import dcc025.genius.Telas.*;
-import dcc025.genius.Usuario.Usuario;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
  *
- * @author Renan
+ * @author Nitro 5
  */
-public class BotaoJogar implements ActionListener {
-
-  
-     private TelaSelecao selecao;
-     private TelaDificuldade tldificuldade;
-   public BotaoJogar(TelaDificuldade tldificuldade, TelaSelecao selecao)
+public class BotaoVoltarDif implements ActionListener{
+     public TelaSelecao selec;
+    public TelaDificuldade dific;
+    public BotaoVoltarDif(TelaSelecao selec,TelaDificuldade dific )
     {
-        this.tldificuldade= tldificuldade;
-        this.selecao=selecao;
-      
+        this.selec=selec;
+        this.dific=dific;
+        
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        selecao.mostrar(false);
-        tldificuldade.DesenhaTudo();
-    }
-    
+      
+        if(selec!=null)
+      {
+       selec.mostrar(true);
+       dific.getTela().dispose();
+      }
+}
 }

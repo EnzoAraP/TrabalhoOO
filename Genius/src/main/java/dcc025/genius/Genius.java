@@ -1,6 +1,6 @@
 package dcc025.genius;
 
-import dcc025.genius.Telas.TelaInicial;
+import dcc025.genius.Telas.*;
 import dcc025.genius.Usuario.Email;
 
 
@@ -13,7 +13,9 @@ public class Genius {
      //   teste.Telainicial();
       //TelaSelecao test= new TelaSelecao();
       //test.desenha();
-      Email.removeEmailespecifica();
+    //  TelaDificuldade tela=new TelaDificuldade(new TelaSelecao());
+    //  tela.DesenhaTudo();
+    Email.removeEmailespecifica();
       TelaInicial ini = new TelaInicial();
       ini.desenha();
       

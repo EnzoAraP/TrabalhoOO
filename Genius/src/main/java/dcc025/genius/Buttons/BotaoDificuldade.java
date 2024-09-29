@@ -5,29 +5,30 @@
 package dcc025.genius.Buttons;
 
 import dcc025.genius.Telas.*;
-import dcc025.genius.Usuario.Usuario;
+import dcc025.genius.Usuario.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
  *
- * @author Renan
+ * @author Nitro 5
  */
-public class BotaoJogar implements ActionListener {
-
+public class BotaoDificuldade implements ActionListener {
+    private TelaDificuldade Tldificuldade;
+    private int dificuldade;
+   
   
-     private TelaSelecao selecao;
-     private TelaDificuldade tldificuldade;
-   public BotaoJogar(TelaDificuldade tldificuldade, TelaSelecao selecao)
-    {
-        this.tldificuldade= tldificuldade;
-        this.selecao=selecao;
-      
-    }
+public BotaoDificuldade( TelaDificuldade tldificuldade,int dificuldade)
+{
+ this.Tldificuldade =tldificuldade;
+ 
+ this.dificuldade = dificuldade;
+ 
+}
     @Override
     public void actionPerformed(ActionEvent e) {
-        selecao.mostrar(false);
-        tldificuldade.DesenhaTudo();
+       
+     Tldificuldade.IniciarJogo(Usuario.atual,dificuldade);
     }
     
 }

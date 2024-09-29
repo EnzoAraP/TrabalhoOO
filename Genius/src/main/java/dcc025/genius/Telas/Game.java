@@ -5,6 +5,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.Random;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
@@ -18,6 +20,7 @@ public class Game extends JFrame {
     Competicao teste;
     int tamanhoa=0;
     int dificuldade;
+    private TelaDificuldade tldificuldade;
 
     public Game(Competicao a,int dificuldade) {
         teste=a;
@@ -30,6 +33,7 @@ public class Game extends JFrame {
         // Configuração da interface
         setTitle("Genius Game");
         setSize(600, 600);
+        this.addWindowListener(new Game.ControleJanela());
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLayout(new GridLayout(2, 2));
 
@@ -74,9 +78,9 @@ public class Game extends JFrame {
         return switch(a)
         {
             
-            case 1-> 400;
+            case 1-> 700;
             case 2-> 500;
-            case 3-> 300;
+            case 3-> 400;
             case 4-> 200;
             default ->700;
         } ;   
@@ -170,6 +174,44 @@ public class Game extends JFrame {
         int pontuacao= (tamanhoa-1);
         tamanhoa =0;
         return(pontuacao);
+    }
+     private class ControleJanela implements WindowListener{
+
+        @Override
+        public void windowOpened(WindowEvent e) {
+         
+        }
+
+        @Override
+        public void windowClosing(WindowEvent e) {
+            if(tldificuldade!=null)
+         tldificuldade.mostrar(true);
+        }
+        @Override
+        public void windowClosed(WindowEvent e) {
+         
+        }
+
+        @Override
+        public void windowIconified(WindowEvent e) {
+            
+        }
+
+        @Override
+        public void windowDeiconified(WindowEvent e) {
+        
+        }
+
+        @Override
+        public void windowActivated(WindowEvent e) {
+          
+        }
+
+        @Override
+        public void windowDeactivated(WindowEvent e) {
+            
+        }
+        
     }
     public static  Game rodar(Competicao a, int dificilade ) {
       

@@ -18,7 +18,7 @@ public class CampeonatoPontos extends CompeticaoMulti {
     private int finalizados;
     
     public CampeonatoPontos(List<Usuario> jogadores,int numVidas) throws Exception {
-        super(jogadores);
+        super(jogadores,1);
         vidas = new ArrayList<>();
         if(numVidas<1)
             numVidas=1;

@@ -4,7 +4,7 @@
  */
 package dcc025.genius.Buttons;
 
-import dcc025.genius.Telas.TelaSelecao;
+import dcc025.genius.Telas.*;
 import dcc025.genius.Usuario.Usuario;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,16 +16,18 @@ import java.awt.event.ActionListener;
 public class Botaosolo implements ActionListener {
 
   
-     private TelaSelecao telao;
-     private Usuario enviado;
-   public Botaosolo(TelaSelecao receptor,Usuario a)
+     
+     private TelaSelecao selecao;
+     private TelaDificuldade tldificuldade;
+   public Botaosolo(TelaDificuldade tldificuldade,TelaSelecao selecao)
     {
-        telao = receptor;
-        enviado =a;
+       this.tldificuldade= tldificuldade;
+       this.selecao=selecao;
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        telao.jogoteste(enviado);
+        selecao.mostrar(false);
+        tldificuldade.DesenhaTudo();
     }
     
 }
