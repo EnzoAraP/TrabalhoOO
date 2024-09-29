@@ -6,6 +6,7 @@ package dcc025.genius.CompeticaoeCampeonato;
 
 import dcc025.genius.CompeticaoeCampeonato.Competicao;
 import dcc025.genius.Telas.Game;
+import dcc025.genius.Telas.*;
 import dcc025.genius.Usuario.Usuario;
 
 /**
@@ -19,17 +20,19 @@ public class CompeticaoSolo  extends Competicao{
     private int dificuldade;
     private Game novojogo;
     private int pontuacao;
+    private TelaDificuldade tldificuldade;
    
 
-    public CompeticaoSolo(Usuario jogador,int dificuldade) {
+    public CompeticaoSolo(Usuario jogador,int dificuldade,TelaDificuldade tldificuldade) {
         this.jogador = jogador;
         this.dificuldade=dificuldade;
+        this.tldificuldade=tldificuldade;
         pontuacao=-1;
     }
     @Override
     public void iniciar() {
         
-        novojogo=Game.rodar(this,dificuldade);
+        novojogo=Game.rodar(this,dificuldade,tldificuldade);
         novojogo.startGame();
     }
 

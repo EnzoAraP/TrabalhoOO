@@ -131,13 +131,13 @@ public class TelaDificuldade {
      Competicao comp;
         switch(tipo){
          case 1:
-             comp = new CompeticaoSolo(testado,dificuldade);
+             comp = new CompeticaoSolo(testado,dificuldade,this);
              break;
          case 2:
-             comp = new CompeticaoDuo(testado,dificuldade);
+             comp = new CompeticaoDuo(testado,dificuldade,this);
              break;
          default:
-             comp = new CompeticaoSolo(testado,dificuldade);
+             comp = new CompeticaoSolo(testado,dificuldade,this);
              break;
         } 
      comp.iniciar();

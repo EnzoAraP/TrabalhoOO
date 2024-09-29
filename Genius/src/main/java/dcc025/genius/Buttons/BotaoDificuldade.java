@@ -27,7 +27,7 @@ public BotaoDificuldade( TelaDificuldade tldificuldade,int dificuldade)
 }
     @Override
     public void actionPerformed(ActionEvent e) {
-       
+       Tldificuldade.mostrar(false);
      Tldificuldade.IniciarJogo(Usuario.atual,dificuldade);
     }
     

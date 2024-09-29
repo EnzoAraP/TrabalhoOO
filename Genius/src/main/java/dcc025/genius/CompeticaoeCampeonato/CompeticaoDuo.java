@@ -5,7 +5,7 @@
 package dcc025.genius.CompeticaoeCampeonato;
 
 import dcc025.genius.CompeticaoeCampeonato.Competicao;
-import dcc025.genius.Telas.Game;
+import dcc025.genius.Telas.*;
 import dcc025.genius.Usuario.Usuario;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -33,13 +33,15 @@ public class CompeticaoDuo extends Competicao {
     private int vencedor;
     private JLabel pontuacaoLabel[];
     private int dificuldade;
+    private TelaDificuldade tldificuldade;
     
-    public CompeticaoDuo(Usuario jogador, int dificuldade) {
+    public CompeticaoDuo(Usuario jogador, int dificuldade,TelaDificuldade tldificuldade) {
         this.jogador = jogador;
         fim = false;
         pontuacoes = new int[2];
         pontuacoes[0]=pontuacoes[1]=-1;
         atual=0;
+        this.tldificuldade=tldificuldade;
         vencedor=0;
         this.dificuldade=dificuldade;
         melhor=jogador.getRecorde();
@@ -48,7 +50,7 @@ public class CompeticaoDuo extends Competicao {
     @Override
     public void iniciar() {
         
-        novojogo = Game.rodar(this, dificuldade);
+        novojogo = Game.rodar(this, dificuldade,tldificuldade);
         JPanel painelPont = new JPanel();
         // Configuração da interface
         painelPont.setBorder(BorderFactory.createTitledBorder(BorderFactory.createDashedBorder(Color.DARK_GRAY), "Pontuações", 2, 1, new Font("Arial",5,32), Color.blue));
@@ -63,9 +65,9 @@ public class CompeticaoDuo extends Competicao {
             pontuacaoLabel[i].setFont(new Font("Arial",2,18));
             painelPont.add(pontuacaoLabel[i]); // Adiciona o JLabel para cada jogador
         }
-        novojogo.setLayout(new GridLayout(3,2));
-        novojogo.setPreferredSize(new Dimension(600,600));
-        novojogo.getContentPane().add(painelPont);
+        novojogo.getTela().setLayout(new GridLayout(3,2));
+        novojogo.getTela().setPreferredSize(new Dimension(600,600));
+        novojogo.getTela().getContentPane().add(painelPont);
         novojogo.startGame();
        
     }
@@ -89,14 +91,14 @@ public class CompeticaoDuo extends Competicao {
         
         System.out.println("Troca de turno");
         pontuacoes[atual]= novojogo.pontuacao();
-        JOptionPane.showMessageDialog(novojogo, "Pontuação do jogador "+(atual+1)+" : "+pontuacoes[atual]);
+        JOptionPane.showMessageDialog(novojogo.getTela(), "Pontuação do jogador "+(atual+1)+" : "+pontuacoes[atual]);
         if(fim){
            if(pontuacoes[1]>pontuacoes[0]) 
                vencedor=1;
            if(pontuacoes[1]!=pontuacoes[0])
-             JOptionPane.showMessageDialog(novojogo, "Vencedor: jogador "+(vencedor+1));
+             JOptionPane.showMessageDialog(novojogo.getTela(), "Vencedor: jogador "+(vencedor+1));
            else
-             JOptionPane.showMessageDialog(novojogo, "E o jogo termina empate. ");  
+             JOptionPane.showMessageDialog(novojogo.getTela(), "E o jogo termina empate. ");  
         }
         System.out.println("pontuacao: " + pontuacoes[atual]);
         System.out.println("melhor:" + melhor);
@@ -114,7 +116,7 @@ public class CompeticaoDuo extends Competicao {
           novojogo.startGame();
         }
         else
-            novojogo.dispose();
+            novojogo.getTela().dispose();
     }
 
     @Override

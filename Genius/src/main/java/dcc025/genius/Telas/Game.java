@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
-public class Game extends JFrame {
+public class Game  {
     private ArrayList<Integer> sequence;
     private int currentStep;
     private JButton[] buttons;
@@ -20,22 +20,24 @@ public class Game extends JFrame {
     Competicao teste;
     int tamanhoa=0;
     int dificuldade;
+    private JFrame tela;
     private TelaDificuldade tldificuldade;
 
-    public Game(Competicao a,int dificuldade) {
+    public Game(Competicao a,int dificuldade, TelaDificuldade tldificuldade) {
         teste=a;
         sequence = new ArrayList<>();
         currentStep = 0;
         random = new Random();
         userTurn = false;
         this.dificuldade=dificuldade;
-
+        this.tldificuldade=tldificuldade;
+        tela= new JFrame();
         // Configuração da interface
-        setTitle("Genius Game");
-        setSize(600, 600);
-        this.addWindowListener(new Game.ControleJanela());
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setLayout(new GridLayout(2, 2));
+        tela.setTitle("Genius Game");
+        tela.setSize(600, 600);
+        tela.addWindowListener(new Game.ControleJanela());
+        tela.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        tela.setLayout(new GridLayout(2, 2));
 
         buttons = new JButton[4];
         for (int i = 0; i < buttons.length; i++) {
@@ -44,7 +46,7 @@ public class Game extends JFrame {
             buttons[i].setOpaque(true);
             buttons[i].setBorderPainted(false);
             buttons[i].addActionListener(new ButtonClickListener(i));
-            add(buttons[i]);
+            tela.add(buttons[i]);
         }
 
         
@@ -152,13 +154,17 @@ public class Game extends JFrame {
                         playSequence();
                     }
                 } else {
-                    JOptionPane.showMessageDialog(Game.this, "Game Over!");
+                    JOptionPane.showMessageDialog(tela, "Game Over!");
                     fimdejogo(true);
                     
                    
                 }
             }
         }
+    }
+    public JFrame getTela()
+    {
+        return tela;
     }
     public boolean fimdejogo(boolean a)
     {
@@ -184,7 +190,7 @@ public class Game extends JFrame {
 
         @Override
         public void windowClosing(WindowEvent e) {
-            if(tldificuldade!=null)
+           if(tldificuldade!=null)
          tldificuldade.mostrar(true);
         }
         @Override
@@ -213,11 +219,11 @@ public class Game extends JFrame {
         }
         
     }
-    public static  Game rodar(Competicao a, int dificilade ) {
+    public static  Game rodar(Competicao a, int dificilade,TelaDificuldade tldificuldade ) {
       
             
-            Game game = new Game(a, dificilade );
-            game.setVisible(true);
+            Game game = new Game(a, dificilade, tldificuldade );
+            game.tela.setVisible(true);
             
        
         return game;
