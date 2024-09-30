@@ -14,22 +14,19 @@ import java.awt.event.ActionListener;
  */
 public class BotaoCancelar implements ActionListener {
     
-    public TelaInicial inic;
+    public Tela anterior;
     public TelaRegistro registro;
-    public BotaoCancelar(TelaInicial inic,TelaRegistro registro)
+    public BotaoCancelar(Tela anterior,TelaRegistro registro)
     {
-        this.inic=inic;
+        this.anterior=anterior;
         this.registro=registro;
         
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-      
-        if(inic!=null)
-      {
-       inic.mostrar(true);
+       anterior.mostrar(true);
        registro.getTela().dispose();
-      }
+     
     }
     
 }

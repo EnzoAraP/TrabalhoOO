@@ -25,7 +25,7 @@ public class Usuario {
     private int recorde;
     private List<CompeticaoMulti> competicoesAtivas;
     private List<CompeticaoMulti> competicoesPassadas;
-    private EstadoCompeticao competindo;
+    protected EstadoCompeticao competindo;
     private static int numUsuariosCriados=0;
     private static int numUsuariosTotal=0;
     public static Usuario atual=null;
@@ -84,6 +84,7 @@ public class Usuario {
     }
     public void adicionaCompeticao(CompeticaoMulti c){
         competicoesAtivas.add(c);
+        competindo.setValor("Sim");
     }
     public int numeroCompeticoesAtivas(){
         if(competicoesAtivas==null)
@@ -182,11 +183,7 @@ public class Usuario {
             competindo.setValor("Não");
         return r;
     }
-    public void adicionarCompeticao(CompeticaoMulti c){
-            competicoesAtivas.add(c);
-            competindo.setValor("Sim");
-            
-    }
+   
     public boolean removivel(){
         return true;
     }
@@ -226,8 +223,8 @@ public class Usuario {
     public EstadoCompeticao getEstadoCompeticao(){
         return competindo;
     }
-    protected class EstadoCompeticao{
-        String valor="Não";
+    public class EstadoCompeticao{
+        private String valor="Não";
 
         protected void setValor(String valor) {
             this.valor = valor;
@@ -241,4 +238,5 @@ public class Usuario {
     }
     
 }
+
 

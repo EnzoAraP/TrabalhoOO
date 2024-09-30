@@ -7,6 +7,7 @@ package dcc025.genius.Telas;
 
 import dcc025.genius.Exceptions.*;
 import dcc025.genius.Buttons.*;
+import dcc025.genius.Usuario.Administrador;
 import dcc025.genius.Usuario.Email;
 import dcc025.genius.Usuario.Usuario;
 
@@ -40,7 +41,7 @@ import javax.swing.border.TitledBorder;
  *
  * @author Renan
  */
-public class TelaRegistro {
+public class TelaRegistro implements Tela {
     private JFrame tela;
     private final int WIDTH = 1350;
     private final int HEIGHT = 650;
@@ -51,14 +52,15 @@ public class TelaRegistro {
     private JTextField campoSenha;
     private JList<Usuario> jListUsuarios;
     private static List<Usuario> listaUsuarios;
+    private TelaControleUsuarios telCon;
     JTable tabela;
     Font fonte;
     Font fonte2;
     Font fonte3;
     private TelaSelecao telaSelecao;
-    private TelaInicial telIni;
-    private TelaControleUsuarios telCon;
+    private Tela telAnterior;
     private boolean modoLogin;
+    private boolean registroAdm;
 
     public TelaRegistro() {
         modoLogin=false;
@@ -66,21 +68,23 @@ public class TelaRegistro {
     public TelaRegistro(boolean modoLogin){
         this.modoLogin=modoLogin;
     }
-     public TelaRegistro(boolean modoLogin,TelaInicial tel){
+     public TelaRegistro(boolean modoLogin,TelaInicial telAnterior){
         this.modoLogin=modoLogin;
-        informarTelaSelecao(tel);
+        this.telAnterior=telAnterior;
+        telCon=null;
+        registroAdm=false;
     }
-     public TelaRegistro(boolean modoLogin,TelaControleUsuarios tel){
+     public TelaRegistro(boolean modoLogin,TelaControleUsuarios telAnterior,boolean registroAdm){
         this.modoLogin=modoLogin;
-        this.telCon=tel;
+        this.telAnterior=telAnterior;
+        telCon=telAnterior;
+        this.registroAdm=registroAdm;
     }
     public JFrame getTela()
     {
         return this.tela;
     }
-    public void informarTelaSelecao(TelaInicial tel){
-        telIni = tel;
-    }
+    @Override
     public void desenha() {
         
         fonte = new Font("Arial", 4, 17);
@@ -153,7 +157,7 @@ public class TelaRegistro {
         logar.setBackground(new Color(140, 240, 170));
         logar.addActionListener(new AcaoLogin(this));
         cancelar.setBackground(new Color(230, 100, 100));
-        cancelar.addActionListener(new BotaoCancelar(telIni,this));
+        cancelar.addActionListener(new BotaoCancelar(telAnterior,this));
         JPanel painelBotoes = new JPanel();
         FlowLayout fLayout = new FlowLayout(FlowLayout.CENTER, 20, 20);
         painelBotoes.setLayout(fLayout);
@@ -211,8 +215,8 @@ public class TelaRegistro {
         campoSenha.setFont(fonte);
         JButton registrar = new JButton("Registrar");
         JButton cancelar = new JButton("Cancelar");
-        registrar.addActionListener(new AcaoRegistro(this));
-        cancelar.addActionListener(new BotaoCancelar(telIni,this));
+        registrar.addActionListener(new AcaoRegistro(this,registroAdm));
+        cancelar.addActionListener(new BotaoCancelar(telAnterior,this));
         registrar.setFont(fonte2);
         cancelar.setFont(fonte2);
         registrar.setBackground(new Color(140, 240, 170));
@@ -239,7 +243,7 @@ public class TelaRegistro {
     public static List<Usuario> getListaUsuarios(){
         return listaUsuarios;
     }
-    public void registrarUsuario(){
+    public void registrarUsuario(boolean criarAdm){
         Email email = null;
         Usuario pessoa = null;
         DefaultListModel<Usuario> model = (DefaultListModel<Usuario>)jListUsuarios.getModel();
@@ -252,7 +256,10 @@ public class TelaRegistro {
         }
         
         try {
-            pessoa = new Usuario(campoNome.getText(), email, campoSenha.getText());
+            if(criarAdm)
+               pessoa = new Administrador(campoNome.getText(), email, campoSenha.getText());
+            else
+                pessoa = new Usuario(campoNome.getText(), email, campoSenha.getText()); 
             model.addElement(pessoa);
             listaUsuarios.add(pessoa);
             if(telCon!=null)
@@ -285,13 +292,23 @@ public class TelaRegistro {
            Usuario.atual=usuarioAtual;
            JOptionPane.showMessageDialog(tela, "Logado");
            telaSelecao = new TelaSelecao();
-           telaSelecao.settlini(telIni);
+           telaSelecao.settlini((TelaInicial)telAnterior);
            telaSelecao.desenha();
            tela.dispose();
        }
        else{
            JOptionPane.showMessageDialog(tela, "Usuário com os dados passados não encontrado!");
        }
+    }
+
+    @Override
+    public void mostrar(boolean mostrar) {
+        tela.setVisible(mostrar);
+    }
+
+    @Override
+    public JFrame getFrame() {
+        return tela;
     }
     
     private class ControleJanela implements WindowListener{
@@ -303,10 +320,7 @@ public class TelaRegistro {
 
         @Override
         public void windowClosing(WindowEvent e) {
-            if(telIni!=null)   
-              telIni.mostrar(true);
-            else if(telCon!=null)
-                telCon.mostrar(true);
+             telAnterior.mostrar(true);
          }
 
         @Override

@@ -35,7 +35,7 @@ import javax.swing.border.TitledBorder;
  *
  * @author Renan
  */
-public class TelaInicial {
+public class TelaInicial implements Tela {
     private JFrame tela;
     private final int WIDTH = 1100;
     private final int HEIGHT = 520;
@@ -104,6 +104,11 @@ public class TelaInicial {
 
     public void mostrar(boolean mostrar) {
       tela.setVisible(mostrar);
+    }
+
+    @Override
+    public JFrame getFrame() {
+        return tela;
     }
 }
 

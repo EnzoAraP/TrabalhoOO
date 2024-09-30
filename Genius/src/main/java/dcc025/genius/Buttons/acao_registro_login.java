@@ -19,6 +19,7 @@ public class acao_registro_login implements ActionListener {
   TelaRegistro tela;
    TelaInicial telaIni;
    TelaControleUsuarios telaCon;
+   
     public acao_registro_login(TelaRegistro tela,TelaInicial telaIni) {
         this.tela = tela;
         this.telaIni=telaIni;

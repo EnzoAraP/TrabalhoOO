@@ -184,8 +184,13 @@ public class TelaControleCompeticao extends TelaListaUsuarios {
                 else{
                 competicao = new CampeonatoChaves(listaPassada);   
                 }
+                TabelaModificada model = (TabelaModificada) tabela.getModel();
+                model.fireTableRowsUpdated(0, model.getRowCount());
                 JOptionPane.showMessageDialog(tela, "Competição criada com sucesso!", "Sucesso criação", JOptionPane.INFORMATION_MESSAGE);
                 DefaultListModel modelLista = (DefaultListModel<String>) listaParcialTela.getModel();
+                
+                for(Usuario jogador : listaParcial)
+                   System.out.println(jogador.getEstadoCompeticao());
                 modelLista.clear();
                 listaParcial.clear();
             } catch (Exception ex) {

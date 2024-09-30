@@ -16,6 +16,9 @@ public class Administrador extends Usuario {
     public Administrador(String nome, String email, String senha) throws EmailUnicoException, EmailFormatoException, SenhaException {
         super(nome, email, senha);
     }
+    public Administrador(String nome, Email email, String senha) throws Exception, SenhaException {
+        super(nome, email, senha);
+    }
 
     @Override
     public boolean removivel() {

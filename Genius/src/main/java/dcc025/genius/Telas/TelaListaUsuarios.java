@@ -33,9 +33,9 @@ import javax.swing.table.DefaultTableCellRenderer;
  *
  * @author Renan
  */
-public abstract class TelaListaUsuarios {
+public abstract class TelaListaUsuarios implements Tela {
      JFrame tela;
-    protected final int WIDTH = 1450;
+    protected final int WIDTH = 1650;
     protected final int HEIGHT = 650;
     private final int V_GAP = 12;
     private final int H_GAP = 8;
@@ -44,7 +44,7 @@ public abstract class TelaListaUsuarios {
     private JTextField campoIdade;
     private JTextField campoDataNascimento;
     private JList<Usuario> jListUsuarios;
-    JTable tabela;
+    protected JTable tabela;
     protected Font fonte;
     protected Font fonte2;
     protected Font fonte3;
@@ -61,6 +61,7 @@ public abstract class TelaListaUsuarios {
     }
     
     
+     @Override
     public void desenha() {
         
         fonte = new Font("Times New Roman", 4, 17);
@@ -81,6 +82,7 @@ public abstract class TelaListaUsuarios {
         tela.pack();
     }
     protected abstract void desenhaEstruturaPropria(); 
+    
     private void desenhaListaUsuarios() {
         JPanel lista = new JPanel();
         TitledBorder bordaTabela = BorderFactory.createTitledBorder("Lista de Usuários");
@@ -124,21 +126,22 @@ public abstract class TelaListaUsuarios {
         
         model.addColumn("Nome");
         model.addColumn("Email");
+        model.addColumn("Cargo");
         model.addColumn("Recorde");
         model.addColumn("Em competição");
        
       
         
         tabela.getColumnModel().getColumn(0)
-                .setPreferredWidth(220);
-        tabela.getColumnModel().getColumn(0)
-                .setPreferredWidth(220);
+                .setPreferredWidth(150);
         tabela.getColumnModel().getColumn(1)
-                .setPreferredWidth(70);
+                .setPreferredWidth(150);
         tabela.getColumnModel().getColumn(2)
-                .setPreferredWidth(30);
+                .setPreferredWidth(60);
         tabela.getColumnModel().getColumn(3)
-                .setPreferredWidth(120);
+                .setPreferredWidth(25);
+        tabela.getColumnModel().getColumn(4)
+                .setPreferredWidth(70);
        JScrollPane painelScroll = new JScrollPane(tabela);
         painelScroll.getViewport().setBackground(new Color(180,220,215)); 
         lista.add((painelScroll), BorderLayout.CENTER);
@@ -146,13 +149,14 @@ public abstract class TelaListaUsuarios {
         tela.getContentPane().add(lista);
         for(Usuario usuario:usuarios){
             
-            Object[] dados = {usuario, usuario.getEmail(), usuario.getRecorde(),(boolean)(usuario.numeroCompeticoesAtivas()==0)};
+            Object[] dados = {usuario, usuario.getEmail(),usuario.getCargo(), usuario.getRecorde(),usuario.getEstadoCompeticao()};
             System.out.println(dados[0]);
             model.addRow(dados);
         } 
     }
-    public void mostrar(boolean b) {
-       tela.setVisible(true);
+     @Override
+    public void mostrar(boolean mostrar) {
+       tela.setVisible(mostrar);
     }
     public void atualizarUsuarioSelecionado() {
         int selectedRow = tabela.getSelectionModel().getMinSelectionIndex();
@@ -165,6 +169,11 @@ public abstract class TelaListaUsuarios {
     }
     public abstract void adicionar();
     public abstract void remover();
+
+    @Override
+    public JFrame getFrame() {
+        return tela;
+    }
     
     private class saidaRetorno implements WindowListener{
 

@@ -16,14 +16,20 @@ import javax.swing.JFrame;
 public class AcaoRegistro implements ActionListener {
 
     TelaRegistro tela;
+    boolean criarAdm;
     public AcaoRegistro(TelaRegistro tela) {
         this.tela=tela;
+        this.criarAdm=false;
+    }
+    public AcaoRegistro(TelaRegistro tela,boolean criarAdm) {
+        this.tela=tela;
+        this.criarAdm=criarAdm;
     }
 
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        tela.registrarUsuario();
+        tela.registrarUsuario(criarAdm);
     }
     
 }

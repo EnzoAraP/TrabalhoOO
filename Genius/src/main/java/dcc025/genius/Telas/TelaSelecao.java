@@ -36,7 +36,7 @@ import javax.swing.border.TitledBorder;
  *
  * @author Renan
  */
-public class TelaSelecao {
+public class TelaSelecao implements Tela {
     private JFrame tela;
     private final int WIDTH = 1100;
     private final int HEIGHT = 720;
@@ -55,6 +55,7 @@ public class TelaSelecao {
     private JButton especialGerenciamentoUsuarios;
     
     
+    @Override
     public void desenha(){
         fonte = new Font("Arial", 4, 17);
         fonte2 = new Font("Arial", 5, 20);
@@ -164,13 +165,15 @@ public class TelaSelecao {
     public void ocultar(){
         tela.setVisible(false);
     }
-    public void mostrar(boolean b){
-        tela.setVisible(b);
+    @Override
+    public void mostrar(boolean mostrar){
+        tela.setVisible(mostrar);
     }
     public JFrame getTela()
     {
         return tela;
     }
+    @Override
     public JFrame getFrame()
     {
         return tela;
