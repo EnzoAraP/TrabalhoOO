@@ -263,6 +263,7 @@ public class TelaRegistro {
         catch(SenhaException e)
         {
             JOptionPane.showMessageDialog(tela, "A senha está invalida! Ela deve ser maior que 8 palavras e possuir pelo menos letra maiuscula!");
+            Email.removeDaLista(campoEmail.getText());
         }
         catch (Exception ex) {
             

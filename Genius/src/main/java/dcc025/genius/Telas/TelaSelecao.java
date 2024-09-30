@@ -9,9 +9,11 @@ import dcc025.genius.Exceptions.*;
 import dcc025.genius.Buttons.*;
 import dcc025.genius.CompeticaoeCampeonato.Competicao;
 import dcc025.genius.CompeticaoeCampeonato.CompeticaoDuo;
+import dcc025.genius.CompeticaoeCampeonato.CompeticaoMulti;
 import dcc025.genius.CompeticaoeCampeonato.CompeticaoSolo;
 import dcc025.genius.Usuario.LidarUsuarios;
 import dcc025.genius.Usuario.Usuario;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -24,6 +26,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -48,6 +51,9 @@ public class TelaSelecao {
     Font fonte;
     Font fonte2;
     Font fonte3;
+    private JButton especialCompeticoes; 
+    private JButton especialGerenciamentoUsuarios;
+    
     
     public void desenha(){
         fonte = new Font("Arial", 4, 17);
@@ -95,6 +101,7 @@ public class TelaSelecao {
         duo.addActionListener(new BotaoJogar(new TelaDificuldade(this,2),this));
         painelBotoes.add(duo);
         painelBotoes.add(multiJogador);
+        multiJogador.addActionListener(new BotaoJogarMulti(this,Usuario.atual));
 
         //painelBotoes.setPreferredSize(new Dimension(WIDTH / 2, HEIGHT / 2));
         TitledBorder bordaTexto= BorderFactory.createTitledBorder("Opções de jogo");
@@ -105,10 +112,50 @@ public class TelaSelecao {
         panelSair.setLayout(fLayout);
         panelSair.setBackground(new Color(140, 200, 220, 0));
         panelSair.add(sair);
-        
+        desenhaBotoesEspeciais();
         
         tela.add(painelBotoes);
         tela.add(panelSair);
+    }
+    private void desenhaBotoesEspeciais(){
+        this.especialCompeticoes = new JButton("Competições multijogador");
+        this.especialGerenciamentoUsuarios = new JButton("Gerenciamento de Usuários");
+        especialCompeticoes.setFont(fonte2);
+        especialGerenciamentoUsuarios.setFont(fonte2);
+        especialCompeticoes.setPreferredSize(new Dimension(2*WIDTH/7,100));
+        especialGerenciamentoUsuarios.setPreferredSize(new Dimension(2*WIDTH/7,100));
+        especialGerenciamentoUsuarios.setBackground(new Color(180, 185, 189));
+        especialCompeticoes.setBackground(new Color(180, 185, 189));
+        especialCompeticoes.addActionListener(new AcaoTelaCompeticao(this) );
+        especialGerenciamentoUsuarios.addActionListener(new AcaoGerenciamentoUsuarios(this));
+        JPanel painelAdm = new JPanel();
+        FlowLayout fLayout = new FlowLayout(FlowLayout.CENTER, 120, 30);
+        painelAdm.setLayout(fLayout);
+        painelAdm.setBackground(new Color(140, 200, 220, 0));
+        painelAdm.add(this.especialGerenciamentoUsuarios);
+        painelAdm.add(this.especialCompeticoes);
+        painelAdm.setPreferredSize(new Dimension(WIDTH,HEIGHT/4));
+        tela.getContentPane().add(painelAdm,BorderLayout.NORTH);
+        
+    }
+    public void abrirGerenciamentoUsuarios(){
+        TelaControleUsuarios novaTela = new TelaControleUsuarios(this);
+        novaTela.desenha();
+    }
+
+    public void competicoesMulti() {
+        System.out.println("EEEEEE"); 
+        if(Usuario.atual.emCompeticao()){
+            System.out.println("EEEEEE35"); 
+            CompeticaoMulti c= Usuario.atual.getCompeticaoAtiva(0);
+            System.out.println(c==null);
+            c.iniciar();
+        }
+        else{
+            JOptionPane.showMessageDialog(tela
+                    , "Você não tem competições multijogador ativas no momento.É necessário que um administrador o adicione em uma para que você possa jogar"
+                    , "Ausência de competições", JOptionPane.WARNING_MESSAGE);
+        }
     }
     public void deslogar()
     {
@@ -121,6 +168,10 @@ public class TelaSelecao {
         tela.setVisible(b);
     }
     public JFrame getTela()
+    {
+        return tela;
+    }
+    public JFrame getFrame()
     {
         return tela;
     }

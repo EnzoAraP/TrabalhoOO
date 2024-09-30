@@ -4,6 +4,7 @@
  */
 package dcc025.genius.CompeticaoeCampeonato;
 
+import static dcc025.genius.CompeticaoeCampeonato.CompeticaoMulti.numCompeticoesMulti;
 import dcc025.genius.Usuario.Usuario;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,13 +16,21 @@ import java.util.List;
 public class CampeonatoChaves extends CompeticaoMulti {
     
     private List<Integer> vencedores;
-    private int vencedor;
+    private int vencedorNum;
+    
+    public static int maxJogadores(){
+        return 2;
+    }
     public CampeonatoChaves(List<Usuario> jogadores) throws Exception {
-        super(jogadores,1);
-        if(jogadores.size()!=2 && jogadores.size()!=4 && jogadores.size()!=8)
+        super(jogadores);
+        if(jogadores.size()!=2){
+            numCompeticoesMulti--;
             throw new Exception("Numero inválido de jogadores");
-        vencedor=-1;
+            
+        }
+        vencedorNum=-1;
         vencedores=new ArrayList<>();
+        this.atualizaUsuariosEmCompeticao();
     }
 
     @Override
@@ -31,12 +40,35 @@ public class CampeonatoChaves extends CompeticaoMulti {
 
     @Override
     public boolean finalizado() {
-        return vencedor!=-1;
+        return vencedorNum!=-1;
     }
 
     @Override
     public void atualizaPontuacao() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
+    @Override
+    public void mudarTurno() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public boolean possivelJogar() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    protected void mensagemFimJogo() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    @Override
+    public String getClassType() {
+        return "CampeonatoChaves";
+    }
+
+    @Override
+    public boolean fim() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

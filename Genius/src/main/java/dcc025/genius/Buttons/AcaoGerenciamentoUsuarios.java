@@ -4,27 +4,25 @@
  */
 package dcc025.genius.Buttons;
 
-import dcc025.genius.Telas.TelaControleUsuarios;
-import dcc025.genius.Telas.TelaListaUsuarios;
+import dcc025.genius.Telas.TelaControleCompeticao;
+import dcc025.genius.Telas.TelaSelecao;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Renan
  */
-public class AcaoRemocaoUsuario implements ActionListener {
-
-    private TelaListaUsuarios tela;
-
-    public AcaoRemocaoUsuario(TelaListaUsuarios tela) {
-        this.tela = tela;
+public class AcaoGerenciamentoUsuarios implements ActionListener {
+    TelaSelecao tela;
+    public AcaoGerenciamentoUsuarios(TelaSelecao tela) {
+       this.tela=tela;
     }
-    
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        tela.remover();
+        tela.abrirGerenciamentoUsuarios();
+        tela.mostrar(false);
+       }
     }
-    
-}

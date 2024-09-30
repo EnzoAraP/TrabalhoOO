@@ -51,7 +51,9 @@ public class Game  {
 
         
     }
-
+    public JFrame getFrame(){
+        return tela;
+    }
     private Color getColor(int index) {
         return switch (index) {
             case 0 -> Color.RED.darker();

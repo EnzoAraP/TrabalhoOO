@@ -29,8 +29,8 @@ import javax.swing.border.TitledBorder;
  */
 public class TelaControleUsuarios extends TelaListaUsuarios {
 
-    public TelaControleUsuarios() {
-        super();
+    public TelaControleUsuarios(TelaSelecao telaAnterior) {
+        super(telaAnterior);
         nomePagina="Controle de Usuários";
     }
 
@@ -69,6 +69,7 @@ public class TelaControleUsuarios extends TelaListaUsuarios {
         tela.getContentPane().add(painel);
     }
 
+    @Override
    public void remover() {
         int selectedRow = tabela.getSelectedRow();
 
@@ -87,15 +88,17 @@ public class TelaControleUsuarios extends TelaListaUsuarios {
         }
     }
 
-     public void mostrar(boolean b) {
-       tela.setVisible(true);
-    }
+     
 
    public  void atualizaModel(Usuario pessoa) {
            TabelaModificada model = (TabelaModificada)tabela.getModel();
             Object[] dados = {pessoa, pessoa.getEmail(), pessoa.getRecorde(),(boolean)(pessoa.numeroCompeticoesAtivas()!=0)};
             System.out.println(dados[0]);
             model.addRow(dados);
+    }
+
+    @Override
+    public void adicionar() {
     }
     
 }

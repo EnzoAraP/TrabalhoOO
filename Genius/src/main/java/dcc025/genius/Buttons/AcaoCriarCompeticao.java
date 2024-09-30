@@ -4,7 +4,7 @@
  */
 package dcc025.genius.Buttons;
 
-import dcc025.genius.Telas.TelaControleUsuarios;
+import dcc025.genius.Telas.TelaControleCompeticao;
 import dcc025.genius.Telas.TelaListaUsuarios;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,18 +13,17 @@ import java.awt.event.ActionListener;
  *
  * @author Renan
  */
-public class AcaoRemocaoUsuario implements ActionListener {
+public class AcaoCriarCompeticao implements ActionListener {
+    private TelaControleCompeticao tela;
 
-    private TelaListaUsuarios tela;
-
-    public AcaoRemocaoUsuario(TelaListaUsuarios tela) {
+    public AcaoCriarCompeticao(TelaControleCompeticao tela) {
         this.tela = tela;
     }
     
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        tela.remover();
-    }
-    
+        tela.criar();
+  
+}
 }

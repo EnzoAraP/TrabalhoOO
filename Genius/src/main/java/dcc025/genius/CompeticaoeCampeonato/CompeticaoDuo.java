@@ -21,7 +21,7 @@ import javax.swing.JPanel;
  *
  * @author Renan
  */
-public class CompeticaoDuo extends Competicao {
+public class CompeticaoDuo implements Competicao {
 
     private int melhor;
     private Usuario jogador;

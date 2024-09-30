@@ -14,6 +14,8 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -33,7 +35,7 @@ import javax.swing.table.DefaultTableCellRenderer;
  */
 public abstract class TelaListaUsuarios {
      JFrame tela;
-    protected final int WIDTH = 1350;
+    protected final int WIDTH = 1450;
     protected final int HEIGHT = 650;
     private final int V_GAP = 12;
     private final int H_GAP = 8;
@@ -49,11 +51,12 @@ public abstract class TelaListaUsuarios {
     private Usuario usuarioSelecionado;
     protected List<Usuario> usuarios;
     protected String nomePagina;
+    protected TelaSelecao telaAnterior;
 
-    public TelaListaUsuarios() {
+    public TelaListaUsuarios(TelaSelecao telaAnterior) {
         nomePagina="";
-         usuarios=TelaRegistro.getListaUsuarios();
-        
+        usuarios=TelaRegistro.getListaUsuarios();
+        this.telaAnterior = telaAnterior;
         
     }
     
@@ -65,8 +68,9 @@ public abstract class TelaListaUsuarios {
         fonte3 = new Font("Times New Roman", 5, 32);
         tela = new JFrame(nomePagina);
         tela.setPreferredSize(new Dimension (WIDTH, HEIGHT+100));
-        tela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        tela.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         tela.setVisible(true);
+        tela.addWindowListener(new saidaRetorno());
         usuarioSelecionado=null;
         FlowLayout layout= new FlowLayout();
         layout.setAlignment(FlowLayout.CENTER);
@@ -147,7 +151,9 @@ public abstract class TelaListaUsuarios {
             model.addRow(dados);
         } 
     }
-
+    public void mostrar(boolean b) {
+       tela.setVisible(true);
+    }
     public void atualizarUsuarioSelecionado() {
         int selectedRow = tabela.getSelectionModel().getMinSelectionIndex();
 
@@ -156,5 +162,42 @@ public abstract class TelaListaUsuarios {
             TabelaModificada model = (TabelaModificada) tabela.getModel();
             usuarioSelecionado = (Usuario) model.getValueAt(selectedRow, 0);
         }
+    }
+    public abstract void adicionar();
+    public abstract void remover();
+    
+    private class saidaRetorno implements WindowListener{
+
+        @Override
+        public void windowOpened(WindowEvent e) {
+            
+        }
+
+        @Override
+        public void windowClosing(WindowEvent e) {
+           telaAnterior.mostrar(true);
+        }
+
+        @Override
+        public void windowClosed(WindowEvent e) {
+          telaAnterior.mostrar(true);
+        }
+
+        @Override
+        public void windowIconified(WindowEvent e) {
+        }
+
+        @Override
+        public void windowDeiconified(WindowEvent e) {
+        }
+
+        @Override
+        public void windowActivated(WindowEvent e) {
+        }
+
+        @Override
+        public void windowDeactivated(WindowEvent e) {
+        }
+        
     }
 }

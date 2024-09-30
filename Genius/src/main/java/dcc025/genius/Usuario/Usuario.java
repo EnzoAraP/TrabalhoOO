@@ -5,9 +5,11 @@
 package dcc025.genius.Usuario;
 
 import dcc025.genius.CompeticaoeCampeonato.Competicao;
+import dcc025.genius.CompeticaoeCampeonato.CompeticaoMulti;
 import dcc025.genius.Exceptions.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 /**
@@ -20,8 +22,8 @@ public class Usuario {
     private Email email;
     private String senha;
     private int recorde;
-    private List<Competicao> competicoesAtivas;
-    private List<Competicao> competicoesPassadas;
+    private List<CompeticaoMulti> competicoesAtivas;
+    private List<CompeticaoMulti> competicoesPassadas;
     private static int numUsuariosCriados=0;
     private static int numUsuariosTotal=0;
     public static Usuario atual=null;
@@ -33,7 +35,24 @@ public class Usuario {
             atual.setRecorde(novaPontuacao);
         }
     }
-    
+    public List<CompeticaoMulti> getCompeticoesAtivas() {
+        return competicoesAtivas;
+    }
+
+    public static void setNumUsuariosTotal(int numUsuariosTotal) {
+        Usuario.numUsuariosTotal = numUsuariosTotal;
+    }
+
+    public void setCompeticoesAtivas(List<CompeticaoMulti> competicoesAtivas) {
+        this.competicoesAtivas = competicoesAtivas;
+    }
+    public List<CompeticaoMulti> getCompeticoesPassadas() {
+        return competicoesPassadas;
+    }
+
+    public void setCompeticoesPassadas(List<CompeticaoMulti> competicoesAtivas) {
+        this.competicoesPassadas = competicoesAtivas;
+    }
     public Usuario(String nome, String email, String senha) throws EmailUnicoException, EmailFormatoException , SenhaException {
         this.nome = nome;
         this.email = new Email(email);
@@ -58,7 +77,7 @@ public class Usuario {
     public int getRecorde() {
         return recorde;
     }
-    public void adicionaCompeticao(Competicao c){
+    public void adicionaCompeticao(CompeticaoMulti c){
         competicoesAtivas.add(c);
     }
     public int numeroCompeticoesAtivas(){
@@ -71,16 +90,21 @@ public class Usuario {
             return 0;
         return competicoesPassadas.size();
     }
-    public void finalizaCompeticao(Competicao c){
+    public void finalizaCompeticao(CompeticaoMulti c){
         boolean removeu=competicoesAtivas.remove(c);
         if(removeu)
             competicoesPassadas.add(c);
     }
+    
     public void setRecorde(int novoRecorde) {
         if(novoRecorde>this.recorde)
           this.recorde = novoRecorde;
     }
-    
+    public CompeticaoMulti getCompeticaoAtiva(int indice){
+        if(indice<competicoesAtivas.size())
+         return competicoesAtivas.get(indice);
+        return null;
+    }
 
     public void apagarUsuario(){
         numUsuariosTotal--;
@@ -138,10 +162,41 @@ public class Usuario {
         }
         return senha;
     }
-
+    public boolean emCompeticao(){
+        if(competicoesAtivas!=null)
+          return !competicoesAtivas.isEmpty();
+        competicoesAtivas= new ArrayList<>();
+        competicoesPassadas= new ArrayList<>();
+        return false;
+    }
+    public boolean retirarCompeticao(CompeticaoMulti c){
+        return competicoesAtivas.remove(c);
+    }
+    public void adicionarCompeticao(CompeticaoMulti c){
+            competicoesAtivas.add(c);
+    }
     @Override
     public String toString() {
         return nome;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+         if (this.getClass().equals(obj.getClass()) ){
+             Usuario objUs = (Usuario)obj;
+             if(this.email.getEmail().equals(objUs.getEmailTexto()) )
+                 return true;
+             else
+                 return false;
+         }
+         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 97 * hash + Objects.hashCode(this.email);
+        return hash;
     }
     
     

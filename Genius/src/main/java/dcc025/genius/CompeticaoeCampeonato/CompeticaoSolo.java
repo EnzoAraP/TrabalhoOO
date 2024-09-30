@@ -14,7 +14,7 @@ import javax.swing.*;
  *
  * @author Renan
  */
-public class CompeticaoSolo  extends Competicao{
+public class CompeticaoSolo  implements Competicao{
 
     private int melhor;
     private Usuario jogador;

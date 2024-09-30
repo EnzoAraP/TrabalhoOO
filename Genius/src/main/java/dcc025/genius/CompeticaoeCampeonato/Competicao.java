@@ -8,7 +8,7 @@ package dcc025.genius.CompeticaoeCampeonato;
  *
  * @author Nitro 5
  */
-public abstract class Competicao {
+public abstract interface Competicao {
     
     public abstract void iniciar();
     public abstract boolean finalizado();
