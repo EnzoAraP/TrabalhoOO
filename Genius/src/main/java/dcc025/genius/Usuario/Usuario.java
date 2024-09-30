@@ -7,6 +7,7 @@ package dcc025.genius.Usuario;
 import dcc025.genius.CompeticaoeCampeonato.Competicao;
 import dcc025.genius.CompeticaoeCampeonato.CompeticaoMulti;
 import dcc025.genius.Exceptions.*;
+import dcc025.genius.Telas.TelaSelecao;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -24,10 +25,12 @@ public class Usuario {
     private int recorde;
     private List<CompeticaoMulti> competicoesAtivas;
     private List<CompeticaoMulti> competicoesPassadas;
+    private EstadoCompeticao competindo;
     private static int numUsuariosCriados=0;
     private static int numUsuariosTotal=0;
     public static Usuario atual=null;
     public static int recordeSessao=0;
+    
     
     public static void mudarRecordes(int novaPontuacao){
         if(novaPontuacao>recordeSessao){
@@ -57,11 +60,12 @@ public class Usuario {
         this.nome = nome;
         this.email = new Email(email);
         this.senha = testasenha(senha);
-        numUsuariosCriados++;
-        this.id=numUsuariosCriados;
+        numUsuariosTotal++;
+        this.id=numUsuariosTotal;
         competicoesAtivas = new ArrayList<>();
         competicoesPassadas = new ArrayList<>();
         recorde=0;
+        competindo = new EstadoCompeticao();
     }
     public Usuario(String nome, Email email, String senha) throws Exception,SenhaException {
         if(nome==null || email==null || senha== null)
@@ -69,9 +73,10 @@ public class Usuario {
         this.nome = nome;
         this.email = email;
         this.senha = testasenha(senha);
-        numUsuariosCriados++;
-        this.id=numUsuariosCriados;
+        numUsuariosTotal++;
+        this.id=numUsuariosTotal;
         recorde=0;
+        competindo = new EstadoCompeticao();
     }
 
     public int getRecorde() {
@@ -172,10 +177,15 @@ public class Usuario {
         return false;
     }
     public boolean retirarCompeticao(CompeticaoMulti c){
-        return competicoesAtivas.remove(c);
+        boolean r= competicoesAtivas.remove(c);
+        if(competicoesAtivas.isEmpty())
+            competindo.setValor("Não");
+        return r;
     }
     public void adicionarCompeticao(CompeticaoMulti c){
             competicoesAtivas.add(c);
+            competindo.setValor("Sim");
+            
     }
     public boolean removivel(){
         return true;
@@ -205,10 +215,18 @@ public class Usuario {
         return hash;
     }
     public String getCargo(){
-        return "Usuario Comum";
+        return "Usuário Comum";
     }
-    
-    protected class estadoCompeticao{
+    public void painelSelecao(TelaSelecao tela){
+        
+    }
+    public String getClassType(){
+        return "Usuario";
+    }
+    public EstadoCompeticao getEstadoCompeticao(){
+        return competindo;
+    }
+    protected class EstadoCompeticao{
         String valor="Não";
 
         protected void setValor(String valor) {
@@ -221,5 +239,6 @@ public class Usuario {
         }
         
     }
+    
 }
 

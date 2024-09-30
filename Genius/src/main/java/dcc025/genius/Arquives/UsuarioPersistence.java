@@ -18,6 +18,7 @@ import com.google.gson.JsonObject;
 import dcc025.genius.CompeticaoeCampeonato.CampeonatoChaves;
 import dcc025.genius.CompeticaoeCampeonato.CampeonatoPontos;
 import dcc025.genius.CompeticaoeCampeonato.CompeticaoMulti;
+import dcc025.genius.Usuario.Administrador;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,28 +36,59 @@ public class UsuarioPersistence {
                 .create();
     }
     public void salvar(List<Usuario> usuarios) {
-        Gson gson = criarGson();
-        String usuariosJson = gson.toJson(usuarios);
+    Gson gson = criarGson();
+    List<JsonObject> jsonUsuarios = new ArrayList<>();
 
-        File diretorio = new File(DIRETORIO);
-        if (!diretorio.exists()) {
-            diretorio.mkdirs();
+    for (Usuario usuario : usuarios) {
+        JsonObject jsonObject = (JsonObject) gson.toJsonTree(usuario);
+
+        // Adiciona o campo de tipo manualmente
+        if (usuario instanceof Administrador) {
+            jsonObject.addProperty("tipo", "Administrador");
+        } else {
+            jsonObject.addProperty("tipo", "Usuario");
         }
-        Arquivo.salvar(CAMINHO, usuariosJson);
+
+        jsonUsuarios.add(jsonObject);
     }
+
+    String usuariosJson = gson.toJson(jsonUsuarios);
+
+    File diretorio = new File(DIRETORIO);
+    if (!diretorio.exists()) {
+        diretorio.mkdirs();
+    }
+    Arquivo.salvar(CAMINHO, usuariosJson);
+}
+
    
-   public List<Usuario> puxarTodos() {
-        Gson gson = criarGson();
-        String usuariosJson = Arquivo.ler(CAMINHO);
+  public List<Usuario> puxarTodos() {
+    Gson gson = criarGson();
+    String usuariosJson = Arquivo.ler(CAMINHO);
 
-        List<Usuario> usuarios = new ArrayList<>();
-        if (!usuariosJson.equals("")) {
-            Type tipoLista = new TypeToken<List<Usuario>>() {}.getType();
-            usuarios = gson.fromJson(usuariosJson, tipoLista);
+    List<Usuario> usuarios = new ArrayList<>();
+    if (!usuariosJson.equals("")) {
+        // Parse o JSON como uma lista de JsonObjects
+        Type tipoLista = new TypeToken<List<JsonObject>>() {}.getType();
+        List<JsonObject> jsonUsuarios = gson.fromJson(usuariosJson, tipoLista);
+
+        // Itera sobre os JsonObjects e desserializa de acordo com o campo "tipo"
+        for (JsonObject jsonObject : jsonUsuarios) {
+            String tipo = jsonObject.get("tipo").getAsString();
+
+            Usuario usuario;
+            if ("Administrador".equals(tipo)) {
+                usuario = gson.fromJson(jsonObject, Administrador.class);
+            } else {
+                usuario = gson.fromJson(jsonObject, Usuario.class);
+            }
+
+            usuarios.add(usuario);
         }
-
-        return usuarios;
     }
+
+    return usuarios;
+}
    public void salvarCamposStatic() throws IOException {
        Gson gson = new Gson();
         Map<String, Integer> camposEstaticos = new HashMap<>();

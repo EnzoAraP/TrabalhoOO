@@ -3,10 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package dcc025.genius.Telas;
+
 import dcc025.genius.*;
 import dcc025.genius.Telas.TelaRegistro;
 import dcc025.genius.Buttons.AcaoRemocaoUsuario;
 import dcc025.genius.Buttons.acao_registro_login;
+import dcc025.genius.CompeticaoeCampeonato.CompeticaoMulti;
 import dcc025.genius.Usuario.Email;
 import dcc025.genius.OtherListeners.TabelaModificada;
 import dcc025.genius.Usuario.Usuario;
@@ -15,6 +17,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -31,12 +36,12 @@ public class TelaControleUsuarios extends TelaListaUsuarios {
 
     public TelaControleUsuarios(TelaSelecao telaAnterior) {
         super(telaAnterior);
-        nomePagina="Controle de Usuários";
+        nomePagina = "Controle de Usuários";
     }
 
     @Override
     protected void desenhaEstruturaPropria() {
-         JPanel painel = new JPanel();
+        JPanel painel = new JPanel();
         painel.setLayout(new BorderLayout());
         painel.setPreferredSize(new Dimension(WIDTH / 4, HEIGHT));
         JPanel form = new JPanel();
@@ -52,7 +57,7 @@ public class TelaControleUsuarios extends TelaListaUsuarios {
         JButton remover = new JButton("Remover");
         adicionar.setFont(fonte2);
         remover.setFont(fonte2);
-        adicionar.addActionListener(new acao_registro_login(new TelaRegistro(false,this),this));
+        adicionar.addActionListener(new acao_registro_login(new TelaRegistro(false, this), this));
         remover.addActionListener(new AcaoRemocaoUsuario(this));
         adicionar.setBackground(new Color(140, 240, 170));
         remover.setBackground(new Color(230, 100, 100));
@@ -70,45 +75,47 @@ public class TelaControleUsuarios extends TelaListaUsuarios {
     }
 
     @Override
-   public void remover() {
+    public void remover() {
         int selectedRow = tabela.getSelectedRow();
 
         if (selectedRow != -1) {
             TabelaModificada model = (TabelaModificada) tabela.getModel();
-            Usuario usuarioRemovido = (Usuario)model.getValueAt(selectedRow, 0);
-            if(Usuario.atual.equals(usuarioRemovido)){
+            Usuario usuarioRemovido = (Usuario) model.getValueAt(selectedRow, 0);
+            if (Usuario.atual.equals(usuarioRemovido)) {
                 JOptionPane.showMessageDialog(tela, "Não pode remover a si mesmo na tela de controle de usuários", "ALERTA!", JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            if(!usuarioRemovido.removivel()){
-                
+            if (!usuarioRemovido.removivel()) {
+
                 JOptionPane.showMessageDialog(tela, "Você não tem permissão para remover este usuário", "AÇÃO NÃO PERMITIDA!", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             if (JOptionPane.showConfirmDialog(tela, "TEM CETEZA QUE DESEJA REMOVER ESSE USUÁRIO?", "REMOVER USUÁRIO", 0) == 0) {
-                
+                List<CompeticaoMulti> compsAtvs = new ArrayList<>(usuarioRemovido.getCompeticoesAtivas());
+                Iterator<CompeticaoMulti> iterator = compsAtvs.iterator();
+                while (iterator.hasNext()) {
+                    CompeticaoMulti comp = iterator.next();
+                    comp.removerJogador(usuarioRemovido);
+                }
                 usuarios.remove(usuarioRemovido);
                 Email.removeDaLista(usuarioRemovido.getEmailTexto());
                 model.removeRow(selectedRow);
             }
-
 
         } else {
             JOptionPane.showMessageDialog(tela, "Nenhum usuário selecionado! ");
         }
     }
 
-     
-
-   public  void atualizaModel(Usuario pessoa) {
-           TabelaModificada model = (TabelaModificada)tabela.getModel();
-            Object[] dados = {pessoa, pessoa.getEmail(), pessoa.getRecorde(),(boolean)(pessoa.numeroCompeticoesAtivas()!=0)};
-            System.out.println(dados[0]);
-            model.addRow(dados);
+    public void atualizaModel(Usuario pessoa) {
+        TabelaModificada model = (TabelaModificada) tabela.getModel();
+        Object[] dados = {pessoa, pessoa.getEmail(), pessoa.getRecorde(), (boolean) (pessoa.numeroCompeticoesAtivas() != 0)};
+        System.out.println(dados[0]);
+        model.addRow(dados);
     }
 
     @Override
     public void adicionar() {
     }
-    
+
 }

@@ -96,6 +96,7 @@ public class CampeonatoPontos extends CompeticaoMulti {
 
     @Override
     public void removerJogador(Usuario jogador) {
+        this.inicializaLitaJogadores();
         int indice = jogadores.indexOf(jogador);
         super.removerJogador(jogador);
         if (indice != -1) {
@@ -188,6 +189,11 @@ public class CampeonatoPontos extends CompeticaoMulti {
     @Override
     public String getClassType() {
         return "CampeonatoPontos";
+    }
+
+    @Override
+    protected void fimAbruptoCompeticao(int indice) {
+          
     }
 
 }

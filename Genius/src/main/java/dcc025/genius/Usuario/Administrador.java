@@ -6,6 +6,7 @@ package dcc025.genius.Usuario;
 
 
 import dcc025.genius.Exceptions.*;
+import dcc025.genius.Telas.TelaSelecao;
 /**
  *
  * @author Renan
@@ -24,6 +25,14 @@ public class Administrador extends Usuario {
     }
     @Override
     public String getCargo(){
+        return "Administrador";
+    }
+    @Override
+    public void painelSelecao(TelaSelecao tela){
+        tela.desenhaBotoesEspeciais();
+    }
+    @Override
+    public String getClassType(){
         return "Administrador";
     }
 }

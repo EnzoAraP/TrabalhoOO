@@ -48,7 +48,7 @@ public class CampeonatoChaves extends CompeticaoMulti {
         this.mensagemPontuacoes= new JTextArea();
         String adicao = "";
         if(indiceAtual==0)
-            adicao="Você, "+jogadorAtual.getNome()+", é o anfitrião a estabelecer a pontuação \na ser batida por "+jogadorAtual.getNome()+"(Desafiante)";
+            adicao="Você, "+jogadorAtual.getNome()+", é o anfitrião a znestabelecer a pontuação \na ser batida por "+jogadorAtual.getNome()+"(Desafiante)";
         else
             adicao="Você, "+jogadorAtual.getNome()+", é o desafiante.\nDeve superar a pontuação de "+pontuacoes.get(0)+" \npara se tornar o campeoão.\nCaso contrário,perderá.";
         painelPont.setLayout(new GridLayout(2, 1));
@@ -57,7 +57,7 @@ public class CampeonatoChaves extends CompeticaoMulti {
         mensagemPontuacoes.setText(adicao);
         mensagemPontuacoes.setFont(new Font("Times New Roman",4,18));
         mensagemPontuacoes.setRows(4);
-        mensagemPontuacoes.setBackground(Color.DARK_GRAY);
+        mensagemPontuacoes.setBackground(Color.lightGray);
         pontuacoesPainel.add(mensagemPontuacoes);
     }
 
@@ -127,10 +127,6 @@ public class CampeonatoChaves extends CompeticaoMulti {
 
     @Override
     protected void mensagemFimJogo() {
-        if(vencedorNum!=indiceAtual)
-            mensagem="\t\tVOCÊ PERDEU!\n";
-        else
-            mensagem="\t\tVOCÊ VENCEU!\n";
         if(vencedorNum==0){
             mensagem+="O desafiante foi incapaz de superar o anfitrião, que defende sua coroa com uma pontuação de "+pontuacoes.get(0)+"!!\n"
                     + "Parabéns ao vencedor "+jogadores.get(0).getNome()+" de email "+jogadores.get(0).getEmailTexto()+".";
@@ -147,6 +143,16 @@ public class CampeonatoChaves extends CompeticaoMulti {
 
     @Override
     public boolean fim() {
-       return vencedorNum!=-1;
+       return vencedorNum!=-1 || emails.size()==1;
+    }
+
+    @Override
+    protected void fimAbruptoCompeticao(int indice) {
+          if(indice==0)
+              mensagem="O anfitrião( "+jogadores.get(0).getNome()+" ) saiu abruptamente da competição. "
+                      + "\nLogo, o desafiante( "+jogadores.get(1).getNome()+" ) se torna o vencedor.";
+          else
+              mensagem="O desafiante( "+jogadores.get(0).getNome()+" ) saiu abruptamente da competição. "
+                      + "\nLogo, o anfitrião( "+jogadores.get(1).getNome()+" ) mantém sua coroa e se torna o vencedor.";
     }
 }

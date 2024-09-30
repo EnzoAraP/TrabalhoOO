@@ -67,7 +67,7 @@ public class TelaSelecao {
         FlowLayout layout= new FlowLayout();
         layout.setAlignment(FlowLayout.CENTER);
         tela.setLayout(layout);
-        
+        Usuario.atual.painelSelecao(this);
         desenhaBotoes();
         tela.getContentPane().setBackground(new Color(140, 200, 220, 80));
         tela.pack();
@@ -112,12 +112,12 @@ public class TelaSelecao {
         panelSair.setLayout(fLayout);
         panelSair.setBackground(new Color(140, 200, 220, 0));
         panelSair.add(sair);
-        desenhaBotoesEspeciais();
+        
         
         tela.add(painelBotoes);
         tela.add(panelSair);
     }
-    private void desenhaBotoesEspeciais(){
+    public void desenhaBotoesEspeciais(){
         this.especialCompeticoes = new JButton("Competições multijogador");
         this.especialGerenciamentoUsuarios = new JButton("Gerenciamento de Usuários");
         especialCompeticoes.setFont(fonte2);

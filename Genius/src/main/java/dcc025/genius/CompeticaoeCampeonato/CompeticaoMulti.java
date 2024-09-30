@@ -188,22 +188,47 @@ public abstract class CompeticaoMulti implements Competicao {
         atualLabel.setText("Sua Pontuação atual: "+pontuacaoAtual+"pontos ");
     }
     
-    public void removerJogador(Usuario jogador){
-        int indice = jogadores.indexOf(jogador);
+    public void removerJogador(Usuario usuarioRemover){
+        this.inicializaLitaJogadores();
+        int indice = jogadores.indexOf(usuarioRemover);
         if(indice!=-1){
-            jogador.retirarCompeticao(this);
-            jogadores.remove(jogador);
+            this.fimAbruptoCompeticao(indice);
+            usuarioRemover.retirarCompeticao(this);
+            jogadores.remove(usuarioRemover);
             emails.remove(indice);
             pontuacoes.remove(indice);
-            if(fim()){
+            if(mensagem.equals("-") && fim()){
                 mensagemFimJogo();
             }
             
+        }
+    }
+    protected void inicializaLitaJogadores(){
+        List<Usuario> listaGeral=TelaRegistro.getListaUsuarios();
+        if(jogadores==null || jogadores.isEmpty()){
+        jogadores = new ArrayList<>();
+        for(String email : emails){
+            for(Usuario usuario: listaGeral)
+                if(usuario.getEmailTexto().equals(email)){
+                    jogadores.add(usuario);
+                    break;
+                }    
+        }
+        for(Usuario jogador : jogadores){
+            List<CompeticaoMulti> comps = jogador.getCompeticoesAtivas();
+            for(int i=0;i<comps.size();i++)
+                if(comps.get(i).getId()==this.id){
+                    comps.set(i, this);
+                    break;
+                }
+        }
         }
     }
     
     protected abstract void mensagemFimJogo();
     
     public abstract String getClassType();
+    
+    protected abstract void fimAbruptoCompeticao(int indice); 
     
 }
