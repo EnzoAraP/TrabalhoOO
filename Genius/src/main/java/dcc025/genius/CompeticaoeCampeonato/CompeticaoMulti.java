@@ -134,10 +134,9 @@ public abstract class CompeticaoMulti implements Competicao {
         jogadorAtual=Usuario.atual;
         pontuacaoAtual=-1;
         melhor=jogadorAtual.getRecorde();
-        novoJogo=Game.rodar(this,1,null);
+        novoJogo=Game.rodar(this,3,null);
         telaNovoJogo=novoJogo.getFrame();
         if(!mensagem.equals("-") || this.fim()){
-            System.out.println("EEEEEE4");   
             if(mensagem.equals("-"))
                    this.mensagemFimJogo();
                JOptionPane.showMessageDialog(telaNovoJogo, mensagem, "Resultado final",JOptionPane.INFORMATION_MESSAGE);
@@ -145,8 +144,7 @@ public abstract class CompeticaoMulti implements Competicao {
                telaNovoJogo.dispose();
                return;
         }
-        if(possivelJogar()){
-        System.out.println("EEEEEE3");    
+        if(possivelJogar()){   
         painelPont = new JPanel();
         
         pontuacoesLabel = new ArrayList<>();

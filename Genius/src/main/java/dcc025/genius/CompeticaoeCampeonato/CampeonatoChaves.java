@@ -48,17 +48,18 @@ public class CampeonatoChaves extends CompeticaoMulti {
         this.mensagemPontuacoes= new JTextArea();
         String adicao = "";
         if(indiceAtual==0)
-            adicao="Você, "+jogadorAtual.getNome()+", é o anfitrião a znestabelecer a pontuação \na ser batida por "+jogadorAtual.getNome()+"(Desafiante)";
+            adicao="Você, "+jogadorAtual.getNome()+", é o anfitrião a \nestabelecer a pontuação \na ser batida por "+jogadores.get(1).getNome()+"(Desafiante)";
         else
             adicao="Você, "+jogadorAtual.getNome()+", é o desafiante.\nDeve superar a pontuação de "+pontuacoes.get(0)+" \npara se tornar o campeoão.\nCaso contrário,perderá.";
         painelPont.setLayout(new GridLayout(2, 1));
         pontuacoesPainel.setBorder(BorderFactory.createTitledBorder("Pontuação"));
         pontuacoesPainel.setFont(new Font("Arial", 5, 18));
         mensagemPontuacoes.setText(adicao);
-        mensagemPontuacoes.setFont(new Font("Times New Roman",4,18));
+        mensagemPontuacoes.setFont(new Font("Times New Roman",4,16));
         mensagemPontuacoes.setRows(4);
         mensagemPontuacoes.setBackground(Color.lightGray);
         pontuacoesPainel.add(mensagemPontuacoes);
+        jogou[indiceAtual]=true;
     }
 
     
@@ -127,11 +128,17 @@ public class CampeonatoChaves extends CompeticaoMulti {
 
     @Override
     protected void mensagemFimJogo() {
+        if(vencedorNum==-1){
+            if(pontuacoes.get(1)>pontuacoes.get(0))
+                vencedorNum=1;
+            else
+                vencedorNum=0;
+        }
         if(vencedorNum==0){
             mensagem+="O desafiante foi incapaz de superar o anfitrião, que defende sua coroa com uma pontuação de "+pontuacoes.get(0)+"!!\n"
                     + "Parabéns ao vencedor "+jogadores.get(0).getNome()+" de email "+jogadores.get(0).getEmailTexto()+".";
         }
-        else{
+        else if(vencedorNum==1){
            mensagem+="O desafiante superou o anfitrião, alcançando a marca de "+pontuacoes.get(1)+"pontos!!!\n"
                     + "Parabéns ao vencedor "+jogadores.get(1).getNome()+" de email "+jogadores.get(1).getEmailTexto()+"."; 
         }
@@ -143,7 +150,8 @@ public class CampeonatoChaves extends CompeticaoMulti {
 
     @Override
     public boolean fim() {
-       return vencedorNum!=-1 || emails.size()==1;
+       boolean k=(vencedorNum!=-1 || emails.size()==1 || jogou[1]==true);
+       return k;
     }
 
     @Override
@@ -152,7 +160,7 @@ public class CampeonatoChaves extends CompeticaoMulti {
               mensagem="O anfitrião( "+jogadores.get(0).getNome()+" ) saiu abruptamente da competição. "
                       + "\nLogo, o desafiante( "+jogadores.get(1).getNome()+" ) se torna o vencedor.";
           else
-              mensagem="O desafiante( "+jogadores.get(0).getNome()+" ) saiu abruptamente da competição. "
-                      + "\nLogo, o anfitrião( "+jogadores.get(1).getNome()+" ) mantém sua coroa e se torna o vencedor.";
+              mensagem="O desafiante( "+jogadores.get(1).getNome()+" ) saiu abruptamente da competição. "
+                      + "\nLogo, o anfitrião( "+jogadores.get(0).getNome()+" ) mantém sua coroa e se torna o vencedor.";
     }
 }

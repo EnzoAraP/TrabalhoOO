@@ -51,8 +51,7 @@ public class TelaSelecao implements Tela {
     Font fonte;
     Font fonte2;
     Font fonte3;
-    private JButton especialCompeticoes; 
-    private JButton especialGerenciamentoUsuarios;
+    
     
     
     @Override
@@ -114,13 +113,13 @@ public class TelaSelecao implements Tela {
         panelSair.setBackground(new Color(140, 200, 220, 0));
         panelSair.add(sair);
         
-        
+        tela.setPreferredSize(new Dimension (WIDTH, (HEIGHT*12)/10));
         tela.add(painelBotoes);
         tela.add(panelSair);
     }
     public void desenhaBotoesEspeciais(){
-        this.especialCompeticoes = new JButton("Competições multijogador");
-        this.especialGerenciamentoUsuarios = new JButton("Gerenciamento de Usuários");
+        JButton especialCompeticoes = new JButton("Competições multijogador");
+        JButton especialGerenciamentoUsuarios = new JButton("Gerenciamento de Usuários");
         especialCompeticoes.setFont(fonte2);
         especialGerenciamentoUsuarios.setFont(fonte2);
         especialCompeticoes.setPreferredSize(new Dimension(2*WIDTH/7,100));
@@ -133,8 +132,8 @@ public class TelaSelecao implements Tela {
         FlowLayout fLayout = new FlowLayout(FlowLayout.CENTER, 120, 30);
         painelAdm.setLayout(fLayout);
         painelAdm.setBackground(new Color(140, 200, 220, 0));
-        painelAdm.add(this.especialGerenciamentoUsuarios);
-        painelAdm.add(this.especialCompeticoes);
+        painelAdm.add(especialGerenciamentoUsuarios);
+        painelAdm.add(especialCompeticoes);
         painelAdm.setPreferredSize(new Dimension(WIDTH,HEIGHT/4));
         tela.getContentPane().add(painelAdm,BorderLayout.NORTH);
         

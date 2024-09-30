@@ -87,7 +87,7 @@ public class Game  {
             case 2-> 500;
             case 3-> 400;
             case 4-> 200;
-            default ->700;
+            default ->500;
         } ;   
         
             
