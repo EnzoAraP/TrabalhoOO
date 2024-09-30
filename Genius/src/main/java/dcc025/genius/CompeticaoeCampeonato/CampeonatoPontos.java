@@ -10,6 +10,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -58,7 +59,11 @@ public class CampeonatoPontos extends CompeticaoMulti {
         }
         painelPont.setLayout(new GridLayout(3, 1));
         vidasLabel = new JLabel("Vidas : " + vidas.get(this.indiceAtual));
+        pontuacoesPainel.setBorder(BorderFactory.createTitledBorder("Lista de maiores pontuuações"));
+        pontuacoesPainel.setFont(new Font("Arial", 5, 18));
         vidasLabel.setFont(new Font("Arial", 2, 18));
+        painelPont.add(vidasLabel);
+        
     }
 
    
@@ -121,6 +126,8 @@ public class CampeonatoPontos extends CompeticaoMulti {
                 novoJogo.startGame();
                 telaNovoJogo = novoJogo.getFrame();
                 vidas.set(indiceAtual, vidas.get(indiceAtual)-1);
+                vidasLabel.setText("Vidas : " + vidas.get(this.indiceAtual));
+                pontuacoesLabel.get(indiceAtual).setText((jogadores.get(this.indiceAtual).getEmailTexto() + " : " + pontuacoes.get(indiceAtual) + " pontos ,   vidas: " + vidas.get(this.indiceAtual)));
             } else {
                 telaNovoJogo.dispose();
             }

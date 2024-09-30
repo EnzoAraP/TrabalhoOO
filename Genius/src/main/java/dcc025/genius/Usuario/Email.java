@@ -41,9 +41,10 @@ public class Email {
             throw new EmailFormatoException();
         System.out.println("aaaa");
         String emailSeparado2[] = emailSeparado[1].split("\\.");
-        System.out.println(emailSeparado2[0]+" "+emailSeparado2[1]);
-        if(emailSeparado2.length!=2 && emailSeparado2.length!=3)
+         if(emailSeparado2.length!=2 && emailSeparado2.length!=3)
             throw new EmailFormatoException();
+        System.out.println(emailSeparado2[0]+" "+emailSeparado2[1]);
+       
         this.emailCompleto=email;
         emails.add(email);
     }
