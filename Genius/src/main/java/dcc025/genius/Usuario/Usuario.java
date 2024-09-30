@@ -163,8 +163,10 @@ public class Usuario {
         return senha;
     }
     public boolean emCompeticao(){
-        if(competicoesAtivas!=null)
+        if(competicoesAtivas!=null){
           return !competicoesAtivas.isEmpty();
+          
+        } 
         competicoesAtivas= new ArrayList<>();
         competicoesPassadas= new ArrayList<>();
         return false;
@@ -175,6 +177,10 @@ public class Usuario {
     public void adicionarCompeticao(CompeticaoMulti c){
             competicoesAtivas.add(c);
     }
+    public boolean removivel(){
+        return true;
+    }
+    
     @Override
     public String toString() {
         return nome;
@@ -198,7 +204,22 @@ public class Usuario {
         hash = 97 * hash + Objects.hashCode(this.email);
         return hash;
     }
+    public String getCargo(){
+        return "Usuario Comum";
+    }
     
-    
-    
+    protected class estadoCompeticao{
+        String valor="Não";
+
+        protected void setValor(String valor) {
+            this.valor = valor;
+        }
+       
+        @Override
+        public String toString() {
+            return valor ;
+        }
+        
+    }
 }
+

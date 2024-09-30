@@ -75,8 +75,18 @@ public class TelaControleUsuarios extends TelaListaUsuarios {
 
         if (selectedRow != -1) {
             TabelaModificada model = (TabelaModificada) tabela.getModel();
+            Usuario usuarioRemovido = (Usuario)model.getValueAt(selectedRow, 0);
+            if(Usuario.atual.equals(usuarioRemovido)){
+                JOptionPane.showMessageDialog(tela, "Não pode remover a si mesmo na tela de controle de usuários", "ALERTA!", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            if(!usuarioRemovido.removivel()){
+                
+                JOptionPane.showMessageDialog(tela, "Você não tem permissão para remover este usuário", "AÇÃO NÃO PERMITIDA!", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             if (JOptionPane.showConfirmDialog(tela, "TEM CETEZA QUE DESEJA REMOVER ESSE USUÁRIO?", "REMOVER USUÁRIO", 0) == 0) {
-                Usuario usuarioRemovido = (Usuario)model.getValueAt(selectedRow, 0);
+                
                 usuarios.remove(usuarioRemovido);
                 Email.removeDaLista(usuarioRemovido.getEmailTexto());
                 model.removeRow(selectedRow);

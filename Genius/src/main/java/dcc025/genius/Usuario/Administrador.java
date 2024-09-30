@@ -15,5 +15,15 @@ public class Administrador extends Usuario {
     public Administrador(String nome, String email, String senha) throws EmailUnicoException, EmailFormatoException, SenhaException {
         super(nome, email, senha);
     }
-    
+
+    @Override
+    public boolean removivel() {
+        if(Usuario.atual.getEmailTexto().equals("adm@adm.adm") || Usuario.atual.equals(this))
+            return true;
+        return false;
+    }
+    @Override
+    public String getCargo(){
+        return "Administrador";
+    }
 }
