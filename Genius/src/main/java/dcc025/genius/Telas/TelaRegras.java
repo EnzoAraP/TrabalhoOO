@@ -145,14 +145,19 @@ public class TelaRegras {
         constraints.gridy = 1; // Grid row
         constraints.gridwidth = 1; 
         constraints.gridheight = 1; 
-        constraints.insets = new Insets(10, 10, 10, 10); // Padding
+        constraints.insets = new Insets(10,10,10,10); // Padding
      
          panel.add(Multiplayer, constraints);
                 }
                  {//Explicaçao Multiplayer
-            String textoMult = "No modo multiplayer, voce e outro jogador irão jogar uma partida, cada um na sua propria conta!";
+            String textoMult = "No modo multiplayer, voce e outro jogador irão jogar uma partida, cada um na sua propria conta!"
+                    + "O Adminsitrador é responsavel por criar a competição."
+                    + "Tipos: Confronto(2 jogadores):"
+                    + " o desafiante deve superar o anfitrião em pontuação."
+                    + " Campeonato de pontos(2 a 4 jogadores): os jogadores tem um número de vidas(chances)"
+                    + " para alcançar a maior pontuação e vencerem.";
             JLabel ExMult = new JLabel ();
-            ExMult.setText("<html><p style=\"width:100px\">"+textoMult+"</p></html>");
+            ExMult.setText("<html><p style=\"width:150px\">"+textoMult+"</p></html>");
             ExMult.setFont(fonte);
              constraints.gridx = 3; // Grid column
         constraints.gridy = 2; // Grid row
